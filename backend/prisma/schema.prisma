@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+
+model Library {
+  id         String   @id     @default(uuid())
+  name        String
+  ownerName   String   
+  phoneNo     String    @unique
+  address     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt 
+
+  shifts      Shift[]
+  students    Student[]
+
+}
+
+
+
+model Shift {
+  id         String   @id @default(uuid())
+  shifts     String
+  libraryId  String 
+
+  library    Library  @relation(fields: [libraryId], references: [id], onDelete: Cascade)
+  students   Student[]
+
+ 
+}
+
+model Student {
+  id           String       @id @default(uuid())
+  libraryId     String     
+  shiftId       String       
+  name          String
+  fatherName    String    
+  motherName    String    
+  address       String
+  mobileNo      String     @unique   
+  identityProof Identity  @default(ADHARCARD)
+  joiningDate   DateTime  
+  status         StudentStatus @default(ACTIVE)  
+
+  library        Library          @relation(fields: [libraryId], references: [id])
+  shift          Shift            @relation(fields: [shiftId], references: [id])
+  payments       StudentPayment[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+enum Identity{
+  ADHARCARD
+  LICENSE
+  vOTERCARD
+}
+
+enum StudentStatus{
+  ACTIVE 
+  LEAVE
+}
+
+
+model Fee {
+  id      String     @id @default(uuid())
+  amount   Decimal  @db.Decimal(10, 2)
+  payments StudentPayment[]
+
+}
+
+model StudentPayment {
+  id           String      @id @default(uuid())
+  feeId        String      
+  studentId    String    
+  paymentDate  DateTime  
+  month        String  
+  paymentMode   Mode  @default(CASH)   
+  status       Payment   @default(PENDING)
+  createdAt    DateTime  @default(now()) 
+
+  fee          Fee       @relation(fields: [feeId], references: [id])
+  student      Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+}
+
+enum Payment{
+  PENDING
+  COMPLETED
+}
+
+enum Mode{
+  ONLINE
+  CASH
+}
+
