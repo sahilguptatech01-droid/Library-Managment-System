@@ -1,5 +1,6 @@
 import { Request,Response } from "express"
 import {prisma} from "../prisma"
+import { string } from "zod"
 
 export const createLibrary=async(req:Request,res:Response)=>{
     try {
@@ -11,8 +12,6 @@ export const createLibrary=async(req:Request,res:Response)=>{
         return res.status(500).json({
             message:"Failed to create Library"
         })
-
-        
     }
 
 }
@@ -47,5 +46,41 @@ export const updateLibrary=async(req:Request,res:Response)=>{
         })
         
     }
+
+}
+
+export const deleteLibrary=async(req:Request,res:Response)=>{
+    //first  get clerkUserId
+    const libraryId=req.params.id
+    
+    try {
+      const library=await prisma.library.findUnique({
+        where:{
+            // clerkUserId:clerkUserId
+            id:libraryId as string
+        }
+    })
+    if (library){
+        const deleteLib=await prisma.library.delete({
+            where:{
+                // clerkUserId
+                id:libraryId as string
+            }
+        })
+        return res.json({
+            message:"Deleted Successfully"
+        })
+    }
+     return res.json({
+            message:"Not Found"
+        })
+    
+
+   } catch (error) {
+    return res.status(500).json({
+        message:"Try after sometime"
+    })
+    
+   }
 
 }
