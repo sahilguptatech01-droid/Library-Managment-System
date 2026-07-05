@@ -12,30 +12,17 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id            String    @id @default(uuid())
-  clerkUserId   String    @unique
-  email         String    @unique
-  name          String?
-  imageUrl      String?
-
-  libraries     Library[]
-
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-}
 
 
 model Library {
   id         String   @id     @default(uuid())
+  clerkUserId   String    @unique
   name        String
   ownerName   String   
   phoneNo     String    @unique
   address     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt 
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   shifts      Shift[]
   students    Student[]
 
