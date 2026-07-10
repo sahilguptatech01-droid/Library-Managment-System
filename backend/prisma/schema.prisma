@@ -73,30 +73,20 @@ enum StudentStatus{
 }
 
 
-model Fee {
-  id      String     @id @default(uuid())
-  amount   Decimal  @db.Decimal(10, 2)
-  payments StudentPayment[]
-
-}
-
 model StudentPayment {
   id           String      @id @default(uuid())
-  feeId        String      
+  amount   Decimal  @db.Decimal(10, 2)
   studentId    String    
   paymentDate  DateTime  
   month        String  
   paymentMode   Mode  @default(CASH)   
-  status       Payment   @default(PENDING)
+  status       Payment   @default(COMPLETED)
   createdAt    DateTime  @default(now()) 
-
-  fee          Fee       @relation(fields: [feeId], references: [id])
-  student      Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student      Student   @relation(fields: [studentId], references: [id])
 
 }
 
 enum Payment{
-  PENDING
   COMPLETED
 }
 
