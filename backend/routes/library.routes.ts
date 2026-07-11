@@ -6,7 +6,7 @@ import { createLibrary, updateLibrary,deleteLibrary } from "../controller/librar
 
 export const router=Router()
 
-router.post('/',validate(createLibrarySchema),createLibrary)
+router.post('/create',validate(createLibrarySchema),createLibrary)
 router.post('/update',validate(updateLibrarySchema),updateLibrary)
 router.delete('/delete/:id',deleteLibrary)
 

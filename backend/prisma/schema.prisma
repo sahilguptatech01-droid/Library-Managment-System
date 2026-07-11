@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -12,86 +7,74 @@ datasource db {
   provider = "postgresql"
 }
 
-
-
 model Library {
-  id         String   @id     @default(uuid())
-  clerkUserId   String    @unique
+  id          String    @id   @default(uuid())
   name        String
-  ownerName   String   
+  ownerName   String
   phoneNo     String    @unique
   address     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt 
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  clerkUserId String    @unique
   shifts      Shift[]
   students    Student[]
-
 }
 
-
-
 model Shift {
-  id         String   @id @default(uuid())
-  shifts     String
-  libraryId  String 
-
-  library    Library  @relation(fields: [libraryId], references: [id], onDelete: Cascade)
-  students   Student[]
-
- 
+  id        String    @id @default(uuid())
+  shifts    String
+  libraryId String
+  library   Library   @relation(fields: [libraryId], references: [id], onDelete: Cascade)
+  students  Student[]
 }
 
 model Student {
-  id           String       @id @default(uuid())
-  libraryId     String     
-  shiftId       String       
+  id            String           @id @default(uuid())
+  libraryId     String
+  shiftId       String
   name          String
-  fatherName    String    
-  motherName    String    
+  fatherName    String
+  motherName    String
   address       String
-  mobileNo      String     @unique   
-  identityProof Identity  @default(ADHARCARD)
-  joiningDate   DateTime  
-  status         StudentStatus @default(ACTIVE)  
-
-  library        Library          @relation(fields: [libraryId], references: [id])
-  shift          Shift            @relation(fields: [shiftId], references: [id])
-  payments       StudentPayment[]
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  mobileNo      String           @unique
+  identityProof Identity         @default(ADHARCARD)
+  joiningDate   DateTime
+  status        StudentStatus    @default(ACTIVE)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  library       Library          @relation(fields: [libraryId], references: [id])
+  shift         Shift            @relation(fields: [shiftId], references: [id])
+  payments      StudentPayment[]
 }
 
-enum Identity{
+model StudentPayment {
+  id          String   @id @default(uuid())
+  studentId   String
+  paymentDate DateTime
+  month       String
+  paymentMode Mode     @default(CASH)
+  status      Payment  @default(COMPLETED)
+  createdAt   DateTime @default(now())
+  amount      Decimal  @db.Decimal(10, 2)
+  student     Student  @relation(fields: [studentId], references: [id])
+}
+
+enum Identity {
   ADHARCARD
   LICENSE
   vOTERCARD
 }
 
-enum StudentStatus{
-  ACTIVE 
+enum StudentStatus {
+  ACTIVE
   LEAVE
 }
 
-
-model StudentPayment {
-  id           String      @id @default(uuid())
-  amount   Decimal  @db.Decimal(10, 2)
-  studentId    String    
-  paymentDate  DateTime  
-  month        String  
-  paymentMode   Mode  @default(CASH)   
-  status       Payment   @default(COMPLETED)
-  createdAt    DateTime  @default(now()) 
-  student      Student   @relation(fields: [studentId], references: [id])
-
-}
-
-enum Payment{
+enum Payment {
   COMPLETED
 }
 
-enum Mode{
+enum Mode {
   ONLINE
   CASH
 }
-
