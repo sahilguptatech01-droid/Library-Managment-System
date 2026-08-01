@@ -4,8 +4,29 @@ import { prisma } from "../prisma"
 
 
 export const submitFee=async(req:Request,res:Response)=>{
-    
+
+
+    const targetDate=new Date(req.body.paymentDate) // Converting to datetime
+    const startOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1, 0, 0, 0, 0);
+    const endOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0, 23, 59, 59, 99)
     try {
+        // check whether that month fees is present or not (prventing duplicate payment)
+        const fee=await prisma.studentPayment.findFirst({
+            where:{
+                studentId:req.body.studentId,
+                        paymentDate:{
+            gte: startOfMonth, // Greater than or equal to start of month
+            lte: endOfMonth    // Less than or equal to end of month
+            }
+            }
+        })
+
+        if(fee){
+            return res.json({
+                message:"Payment already present for this month"
+            })
+        }
+
         const submit=await prisma.studentPayment.create({
             data:req.body
         })
@@ -26,7 +47,6 @@ export const submitFee=async(req:Request,res:Response)=>{
         })
         
     }
-
 }
 
 export const monthlyEarning=async (req:Request,res:Response)=> {
@@ -63,4 +83,33 @@ export const monthlyEarning=async (req:Request,res:Response)=> {
         })
     }
     
+}
+
+
+export const getTransaction=async(req:Request,res:Response)=>{
+    const studentId=req.params.id as string
+    
+    try {
+        const transaction=await prisma.studentPayment.findMany({
+            where:{
+                studentId:studentId
+            },
+            omit:{
+                createdAt:true,
+                // studentId:true,
+                id:true,
+
+            }
+
+        })
+
+        return res.json({
+            transaction
+        })
+    } catch (error) {
+        return res.json({
+            message:"Try after sometime"
+        })
+        
+    }
 }
