@@ -13,7 +13,7 @@ const CreateStudent = () => {
   const handleSubmit=async (data:any)=>{
     try{
 
-      const response=await axios.post(`${API_URL}/students/create`,
+      await axios.post(`${API_URL}/students/create`,
         data,
         {
           withCredentials:true
@@ -24,6 +24,7 @@ const CreateStudent = () => {
       setTimeout(()=>{
         navigate('/dashboard')
       },3000)
+      
     }catch(e){
       setMessage('Try after sometime')
       setShow(true)

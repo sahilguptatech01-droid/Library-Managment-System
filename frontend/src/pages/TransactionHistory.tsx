@@ -11,7 +11,7 @@ export default function TransactionHistory() {
   const navigate = useNavigate();
   const {id}=useParams()
 
- const { isPending, error, data } = useQuery({
+ const { isPending, data } = useQuery({
   queryKey: ['transaction', id],
 
   queryFn: async () => {

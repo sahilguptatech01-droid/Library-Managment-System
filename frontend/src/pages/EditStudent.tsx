@@ -34,7 +34,7 @@ const EditStudent = () => {
   
 
   async function handleSubmit(data:any){
-    const response=await axios.patch(`${API_URL}/students/${id}`,
+    await axios.patch(`${API_URL}/students/${id}`,
       data,{
         withCredentials:true
       }
