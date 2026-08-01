@@ -10,9 +10,9 @@ const Card = () => {
   const navigate=useNavigate()
 
    const { isPending, error, data } = useQuery({
-    queryKey: ['id',id],
-    staleTime:10*100000,
-    queryFn: async () =>
+    queryKey: ['id'],
+    // staleTime:1500,
+      queryFn: async () =>
       await axios(`http://localhost:3000/students/detail/${id}`,{
        
        withCredentials:true
@@ -97,11 +97,11 @@ const Card = () => {
 
         <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
           <p className="text-xs uppercase text-gray-400 tracking-widest">
-            Shift
+            Shiftcd 
           </p>
-          <p className="text-lg text-white mt-1">
+          {/* <p className="text-lg text-white mt-1">
             {data.details.shift.shifts}
-          </p>
+          </p> */}
         </div>
 
         <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">

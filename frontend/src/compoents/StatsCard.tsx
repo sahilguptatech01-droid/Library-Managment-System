@@ -1,7 +1,6 @@
 const StatsCard = ({
   title = "Revenue",
   value = "10000",
-  growth = "+12.5%",
 }) => {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 p-6 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/50 hover:shadow-indigo-500/10">
@@ -15,9 +14,7 @@ const StatsCard = ({
           {title}
         </p>
 
-        <span className="rounded-full bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-400">
-          {growth}
-        </span>
+       
       </div>
 
       {/* Number */}

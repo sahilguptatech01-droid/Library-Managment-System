@@ -31,10 +31,7 @@ const CreateStudent = () => {
         navigate('/dashboard')
       },3000)
 
-    }
-    
-   
-    
+    } 
   }
 
   return (

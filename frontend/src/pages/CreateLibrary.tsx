@@ -17,7 +17,7 @@ export const Create = () => {
     
 
     function handleChange(e:any){
-    const {name,value}=e.target;
+      const {name,value}=e.target;
         setForm((prev)=>({...prev,[name]:value}))
 
     }

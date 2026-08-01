@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ArrowLeft,Calendar,CreditCard,IndianRupee } from "lucide-react";
 import Loading from "../compoents/Loading";
-import GlobalError from "../compoents/GlobalError";
+// import GlobalError from "../compoents/GlobalError";
 
 
 export default function TransactionHistory() {
@@ -15,7 +15,7 @@ export default function TransactionHistory() {
   queryKey: ['transaction', id],
 
   queryFn: async () => {
-    const res = await axios.get(`${API_URL}/fees/transactions/${id}0`,{
+    const res = await axios.get(`${API_URL}/fees/transactions/${id}`,{
         withCredentials:true
     });
     return res.data;
@@ -76,7 +76,7 @@ export default function TransactionHistory() {
                       Payment Date
                     </p>
                     <h3 className="font-semibold text-white">
-                      {transaction.paymentDate}
+                      {transaction.paymentDate.split('T')[0]}
                     </h3>
                   </div>
                 </div>

@@ -78,6 +78,7 @@ export default function PaymentForm() {
     mutation.mutate({
       ...formData,
       paymentDate: new Date(formData.paymentDate),
+      amount:Number(formData.amount)
     });
 
 

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom"
 import StudentForm from "../compoents/StudentForm"
 
 const EditStudent = () => {
-    const navigate=useNavigate()
+  const navigate=useNavigate()
   const [data,setData]=useState()
   const [message,setMessage]=useState('')
   const [show,setShow]=useState(false)

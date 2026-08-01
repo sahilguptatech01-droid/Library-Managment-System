@@ -7,7 +7,6 @@ export type Student={
   address:string,
   mobileNo:string,
   status:string,
-  shiftID:string,
   joiningDate:Date,
   identityProof:string
 }
@@ -29,7 +28,6 @@ const StudentForm = ({onSubmit,intialData,mode,text}:StudentProps) => {
         mobileNo:intialData?.mobileNo ??"",
         identityProof:"ADHARCARD",
         status:intialData?.status ??"ACTIVE",
-        shiftId:intialData?.shiftID ??"",
         joiningDate:new Date() ?? intialData?.joiningDate
     })
 
@@ -61,12 +59,12 @@ const StudentForm = ({onSubmit,intialData,mode,text}:StudentProps) => {
 
   return (
 <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-6">
-  <div className="w-full max-w-4xl rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">
+  <div className="w-full max-w-4xl rounded-2xl border border-zinc-800 bg-zinc-900 p-4 shadow-2xl">
 
 
     <form
       onSubmit={handleSubmit}
-      className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6"
+      className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10"
     >
       {/* Student Name */}
       <div>
@@ -174,21 +172,6 @@ const StudentForm = ({onSubmit,intialData,mode,text}:StudentProps) => {
           <option value="ACTIVE">ACTIVE</option>
           <option value="INACTIVE">INACTIVE</option>
         </select>
-      </div>
-
-      {/* Shift */}
-      <div className="md:col-span-2">
-        <label className="mb-2 block text-sm font-medium text-zinc-300">
-          Shift ID
-        </label>
-        <input
-          type="text"
-          name="shiftId"
-          value={formData.shiftId}
-          onChange={handleChange}
-          placeholder="Enter shift ID"
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
-        />
       </div>
 
       {/* Button */}

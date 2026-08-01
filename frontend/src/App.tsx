@@ -4,6 +4,12 @@ import Home from './pages/Home'
 import Create from './pages/CreateLibrary'
 import Card from './compoents/Card'
 import AdminDahboard from './pages/AdminDahboard'
+import CreateStudent from './pages/CreateStudent'
+import EditStudent from './pages/EditStudent'
+import ProtectedRoute from './routes/ProtectedRoute'
+import SignUpPage from './pages/SignUpPage'
+import Payment from './pages/Payment'
+import TransactionHistory from './pages/TransactionHistory'
 
 
 
@@ -33,11 +39,20 @@ export default function App() {
     <BrowserRouter>
      <Routes>
         <Route path="/" element={<Home/>}/> 
-        <Route path="/details/:id" element={<Card/>}/>
+        <Route path="/sign-up" element={<SignUpPage/>}/> 
         <Route path="/create" element={<Create/>}/>
+        <Route path="/payment/:id" element={<Payment/>}/>
+
+        <Route path="/details/:id" element={<Card/>}/>
         <Route path="/dashboard" element={<AdminDahboard/>}/>
-        {/* <Route path="/add/student" element={<AddStudent/>}/>
-        <Route path="/edit/student/:id" element={< EditStudent/>}/> */}
+        <Route path="/add/student" element={<CreateStudent/>}/>
+        <Route path="/edit/student/:id" element={< EditStudent/>}/>
+        <Route path="/transactions/:id" element={< TransactionHistory/>}/>
+
+        {/* Protected Route */}
+        <Route element={<ProtectedRoute/>}>
+
+       </Route>
         
 
     

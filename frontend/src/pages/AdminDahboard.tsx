@@ -1,10 +1,10 @@
 import { Bell, Search } from "lucide-react";
-import StatsCard from "../compoents/StatsCard";
 import Box from "../compoents/StudentTable";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import StatsGrid from "../compoents/StatsGrid";
 
 const AdminDashboard = () => {
-  // const [search,setSearch]=useState<string>('')
+  const navigate=useNavigate()
   
   return (
     <div className="min-h-screen bg-[#09090B] text-white">
@@ -45,28 +45,9 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid gap-6 p-6 sm:grid-cols-2 xl:grid-cols-3">
+      {/* StatsGrid */}
+      <StatsGrid/>
 
-        <StatsCard
-          title="Revenue"
-          value="10000"
-          growth="+15%"
-        />
-
-        <StatsCard
-          title="Students"
-          value="245"
-          growth="+8%"
-        />
-
-        <StatsCard
-          title="Notifications"
-          value="18"
-          growth="+3%"
-        />
-
-      </div>
 
       {/* Table / Students */}
       <div className="px-6 pb-6">
@@ -77,7 +58,9 @@ const AdminDashboard = () => {
               Student List
             </h2>
 
-            <button className="rounded-lg bg-indigo-600 px-4 py-2 text-sm hover:bg-indigo-500 transition">
+            <button onClick={()=>{
+              navigate('/add/student')
+            }} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm hover:bg-indigo-500 transition">
               Add Student
             </button>
           </div>
