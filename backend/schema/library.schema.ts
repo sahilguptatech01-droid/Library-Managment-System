@@ -18,9 +18,9 @@ export const createLibrarySchema = z.object({
   address: z
     .string()
     .min(1, "Address is required")
-    .max(255),
+    .max(255)
 
-  clerkUserId: z.string(),
+  // clerkUserId: z.string(),
 });
 
 

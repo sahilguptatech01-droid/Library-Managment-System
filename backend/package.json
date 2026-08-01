@@ -1,5 +1,11 @@
 {
   "name": "backend",
+  
+  "scripts": {
+    "build": "bunx prisma generate",
+    "start": "bun run index.ts"
+  }
+,
   "module": "index.ts",
   "type": "module",
   "private": true,

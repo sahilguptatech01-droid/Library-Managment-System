@@ -1,16 +1,35 @@
 import { Request,Response } from "express"
 import {prisma} from "../prisma"
-import { string } from "zod"
+import { clerkClient } from "@clerk/express";
 
 export const createLibrary=async(req:Request,res:Response)=>{
+    const userId=res.locals.userId
     try {
         const library =await prisma.library.create({
-            data:req.body
+            data:{
+                name:req.body.name,
+                ownerName:req.body.ownerName,
+                phoneNo:req.body.phoneNo,
+                address:req.body.address,
+                clerkUserId:userId
+            }
         })
-        return res.status(200).json({library})
+
+        // Clerk MetaData
+
+        await clerkClient.users.updateUserMetadata(userId, {
+            publicMetadata: {
+            libraryCreated: true,
+            },
+        });
+
+        return res.status(200).json({
+           library,
+           message:"Library is created"
+        })
     } catch (error) {
         return res.status(500).json({
-            message:"Failed to create Library"
+            message:"Failed to create Library",
         })
     }
 

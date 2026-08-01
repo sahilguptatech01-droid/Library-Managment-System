@@ -7,8 +7,18 @@ export const submitFee=async(req:Request,res:Response)=>{
 
 
     const targetDate=new Date(req.body.paymentDate) // Converting to datetime
-    const startOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1, 0, 0, 0, 0);
-    const endOfMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() + 1, 0, 23, 59, 59, 99)
+const startOfMonth = new Date(Date.UTC(
+    targetDate.getUTCFullYear(), 
+    targetDate.getUTCMonth(), 
+    1, 0, 0, 0, 0
+));
+
+// Generates: 2026-08-31T23:59:59.999Z
+const endOfMonth = new Date(Date.UTC(
+    targetDate.getUTCFullYear(), 
+    targetDate.getUTCMonth() + 1, 
+    0, 23, 59, 59, 999
+));
     try {
         // check whether that month fees is present or not (prventing duplicate payment)
         const fee=await prisma.studentPayment.findFirst({

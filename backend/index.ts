@@ -5,6 +5,7 @@ import { router as shiftRouter } from "./routes/shift.routes"
 import { router as studentRoute } from "./routes/student.routes"
 import { router as feesRoute } from "./routes/fee.routes"
 import { clerkMiddleware } from "@clerk/express"
+import { router as adminRoute } from "./routes/admin.routes"
 
 
 const app=express()
@@ -19,7 +20,7 @@ app.use('/libraries',libararyRoute)
 app.use('/shifts',shiftRouter)
 app.use('/students',studentRoute)
 app.use('/fees',feesRoute)
-
+app.use('/admin',adminRoute)
 
 
 

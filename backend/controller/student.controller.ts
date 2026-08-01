@@ -2,15 +2,19 @@ import { Request,Response } from "express";
 import { prisma } from "../prisma";
 
 export const createStudent=async(req:Request,res:Response)=>{
+
     try {
         const library=await prisma.library.findUnique({
             where:{
-                id:req.body.libraryId
+                id:res.locals.libraryId  // get this from middleware
             }
         })
         if(library){
             const student=await prisma.student.create({
-                data:req.body
+                data:{
+                    ...req.body,
+                    libraryId:res.locals.libraryId
+                }
             })
             return res.json({
                 message:"Student added",
@@ -32,21 +36,43 @@ export const createStudent=async(req:Request,res:Response)=>{
 
 
 export const getStudent=async(req:Request,res:Response)=>{
-    const libraryId=req.params.libraryId
+    const libraryId=res.locals.libraryId
     try {
         const library=await prisma.library.findUnique({
             where:{
-                id:libraryId as string
+                id:libraryId  as string
             }
         })
         if(library){
-            const student=await prisma.student.findMany({
+            const students=await prisma.student.findMany({
                 where:{
                     libraryId:libraryId as string
+                },
+                omit:{
+                    libraryId:true,
+                    updatedAt:true,
+                    createdAt:true,
+                    fatherName:true,
+                    motherName:true,
+                    address:true,
+                    identityProof:true,
+                    status:true,
+                    mobileNo:true,
+                    joiningDate:true,
+                    shiftId:true
+                },
+                include:{
+                    shift:{
+                        select:{
+                            shifts:true
+                        }
+                    }
                 }
+               
             })
+            
             return res.json({
-                student
+                students
             })
         }
         return res.json({
@@ -61,11 +87,8 @@ export const getStudent=async(req:Request,res:Response)=>{
 
 
 export const updateStudentDetail=async (req:Request,res:Response) => {
-    const studentId=req.params.studentId
-   console.log(studentId);
-   
-    
-    // clerkUserID
+  const studentId=req.params.studentId
+  
  try {
     const student=await prisma.student.findUnique({
         where:{
@@ -78,6 +101,7 @@ export const updateStudentDetail=async (req:Request,res:Response) => {
             where:{
                 id:studentId as string
             }
+            
         })
         return res.json({
             message:"updated Details",
@@ -98,10 +122,24 @@ export const updateStudentDetail=async (req:Request,res:Response) => {
 
 export const detailStudent=async (req:Request,res:Response)=>{
     const studentId=req.params.studentId;
+    
     try {
         const details=await prisma.student.findUnique({
             where:{
-                id:studentId as string
+                id:studentId as string,
+            },
+            include:{
+              shift:{
+                select:{
+                    shifts:true
+                }
+              }
+            },
+            omit:{
+                createdAt:true,
+                updatedAt:true,
+                libraryId:true,
+            
             }
         })
         return res.json({
@@ -110,7 +148,8 @@ export const detailStudent=async (req:Request,res:Response)=>{
         
     } catch (error) {
         return res.json({
-            message:"Try after sometime"
+            message:"Try after sometime",
+            error
         })
         
     }
