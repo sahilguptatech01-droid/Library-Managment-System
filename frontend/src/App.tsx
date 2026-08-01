@@ -43,15 +43,15 @@ export default function App() {
         <Route path="/create" element={<Create/>}/>
         <Route path="/payment/:id" element={<Payment/>}/>
 
+
+        {/* Protected Route */}
+        <Route element={<ProtectedRoute/>}>
+
         <Route path="/details/:id" element={<Card/>}/>
         <Route path="/dashboard" element={<AdminDahboard/>}/>
         <Route path="/add/student" element={<CreateStudent/>}/>
         <Route path="/edit/student/:id" element={< EditStudent/>}/>
         <Route path="/transactions/:id" element={< TransactionHistory/>}/>
-
-        {/* Protected Route */}
-        <Route element={<ProtectedRoute/>}>
-
        </Route>
         
 
