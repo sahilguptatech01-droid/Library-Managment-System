@@ -3,9 +3,12 @@ import axios from "axios"
 import { API_URL } from "../config"
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
+import { getToken } from "@clerk/react";
+
 
 const Box = () => {
   const navigate=useNavigate()
+  // const {getToken}=useAuth()
   const { isPending, error, data } = useQuery({
     queryKey: ['getStudent '],
     staleTime:10*1000000,
@@ -19,15 +22,25 @@ const Box = () => {
   // 4. Stop refetching when the component mounts (if data is already cached)
   // refetchOnMount: false, 
 
-    queryFn: async() =>
-      await axios.get(`${API_URL}/students/`,{
-        withCredentials:true
-      }).then((res)=>res.data)
+    queryFn: async ()=>{
+      const token=await getToken()
+      const response=await axios.get(`${API_URL}/students/`,{
+        headers:{
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      return response.data
+    }
+
+     
       
   })
 
   if (isPending) return <Loading/>
   if (error) return 'An error has occurred: ' + error.message
+  if(data.students.length===0){
+    return <h2>No student</h2>
+  }
  
   return (
 

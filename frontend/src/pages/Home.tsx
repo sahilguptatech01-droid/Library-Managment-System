@@ -1,5 +1,6 @@
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
-import { Link } from "react-router-dom";
+// import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
+// import { Link } from "react-router-dom";
+// import Navbar from "../compoents/NavBar";
 
 import {
   ArrowRight,
@@ -12,8 +13,8 @@ import {
   ClipboardCheck,
   BarChart3,
   CheckCircle2,
-  Menu,
 } from "lucide-react";
+import Navbar from "../compoents/NavBar";
 
 export default function Home() {
   const features = [
@@ -67,50 +68,7 @@ export default function Home() {
         <div className="absolute right-10 bottom-10 h-96 w-96 rounded-full bg-cyan-500/20 blur-[120px]" />
       </div>
 
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-r from-violet-600 to-cyan-500 font-bold">
-              S
-            </div>
-
-            <div>
-              <h1 className="text-xl font-bold">LibraryBoy</h1>
-              <p className="text-xs text-gray-400">Self Study Library SaaS</p>
-            </div>
-          </div>
-
-          <div className="hidden md:flex items-center gap-8 text-gray-400">
-            <span>Features</span>
-            <Link to="/dashboard">Dashboard</Link>
-            <Link to="create">Create Library</Link>
-            <a href="#">Contact</a>
-          </div>
-
-          <div className="hidden md:flex gap-3">
-            <Show when="signed-out">
-              <div className="px-5 py-2 text-gray-300">
-                <SignInButton />
-              </div>
-
-              <div className="rounded-xl bg-linear-to-r from-violet-600 to-cyan-500 px-5 py-2 font-semibold">
-                <SignUpButton />
-              </div>
-            </Show>
-
-            <Show when="signed-in">
-            <div className="rounded-xl bg-linear-to-r from-violet-600 to-cyan-500 px-5 py-2 font-semibold">
-                <UserButton />
-            </div>
-            </Show>
-          </div>
-
-          <button className="md:hidden">
-            <Menu />
-          </button>
-        </div>
-      </nav>
+     <Navbar/>
 
       {/* Hero */}
       <section className="mx-auto max-w-7xl px-6 pt-24 pb-20">

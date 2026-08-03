@@ -9,14 +9,19 @@ import { useMutation } from "@tanstack/react-query";
 import { API_URL } from "../config";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { getToken } from "@clerk/react";
 
 export default function PaymentForm() {
   const navigate=useNavigate()
   const { id } = useParams();
   const mutation = useMutation({
     mutationFn: async (data: PaymentPayload) => {
+      const token=await getToken()
       const response=await axios.post(`${API_URL}/fees/submit`, data, {
-        withCredentials: true,
+        headers:{
+                  Authorization: `Bearer ${token}`,
+
+        }
       });
       return response
     },

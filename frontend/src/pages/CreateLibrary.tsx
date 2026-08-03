@@ -2,9 +2,11 @@ import { useState } from "react"
 import { API_URL } from "../config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getToken } from "@clerk/react";
 
 
 export const Create = () => {
+  
     const[form,setForm]=useState({
         name:"",
         ownerName:"",
@@ -23,13 +25,17 @@ export const Create = () => {
     }
 
     async function handleSubmit(e:any){
+      const token=await getToken()
         setMessage("")
         e.preventDefault()
         try {
             const response=await axios.post(`${API_URL}/libraries/create`,{
               ...form
             },{
-                withCredentials:true
+                headers:{
+                          Authorization: `Bearer ${token}`,
+
+                }
             }
         )
             if(response){

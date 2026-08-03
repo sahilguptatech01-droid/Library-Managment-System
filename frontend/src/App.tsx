@@ -40,13 +40,12 @@ export default function App() {
      <Routes>
         <Route path="/" element={<Home/>}/> 
         <Route path="/sign-up" element={<SignUpPage/>}/> 
-        <Route path="/create" element={<Create/>}/>
-        <Route path="/payment/:id" element={<Payment/>}/>
 
+        <Route path="/create" element={<Create/>}/>
 
         {/* Protected Route */}
-        <Route element={<ProtectedRoute/>}>
-
+        <Route element={<ProtectedRoute/>}>        
+        <Route path="/payment/:id" element={<Payment/>}/>
         <Route path="/details/:id" element={<Card/>}/>
         <Route path="/dashboard" element={<AdminDahboard/>}/>
         <Route path="/add/student" element={<CreateStudent/>}/>

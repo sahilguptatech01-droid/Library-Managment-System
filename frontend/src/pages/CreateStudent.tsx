@@ -4,6 +4,7 @@ import StudentForm from '../compoents/StudentForm'
 import { API_URL } from '../config'
 import axios from 'axios'
 import { useState } from 'react'
+import { getToken } from '@clerk/react'
 
 const CreateStudent = () => {
   const navigate=useNavigate()
@@ -11,12 +12,15 @@ const CreateStudent = () => {
     const [show,setShow]=useState(false)
 
   const handleSubmit=async (data:any)=>{
+    const token=getToken()
     try{
 
       await axios.post(`${API_URL}/students/create`,
         data,
         {
-          withCredentials:true
+          headers:{
+              Authorization: `Bearer ${token}`,
+          }
         }
       )
       setMessage('Created Successfully')

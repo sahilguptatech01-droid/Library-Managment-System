@@ -1,4 +1,4 @@
-import { Bell, Search } from "lucide-react";
+import { Bell, Search,ArrowLeft } from "lucide-react";
 import Box from "../compoents/StudentTable";
 import { useNavigate } from "react-router-dom";
 import StatsGrid from "../compoents/StatsGrid";
@@ -7,17 +7,31 @@ const AdminDashboard = () => {
   const navigate=useNavigate()
   
   return (
+
     <div className="min-h-screen bg-[#09090B] text-white">
+      
 
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 px-6 py-6 border-b border-zinc-800">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 px-6 py-6 border-b border-zinc-800">
 
-        <div>
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-zinc-400 mt-1">
-            Welcome back 👋
-          </p>
-        </div>
+              <div>
+        <h1 className="text-3xl font-bold text-white">
+          Admin Dashboard
+        </h1>
+
+        <p className="mt-1 text-zinc-400">
+          Welcome back 👋
+        </p>
+      </div>
+
+      <button
+        onClick={() => navigate("/")}
+        className="flex items-center gap-2 self-start rounded-xl border border-zinc-700 bg-zinc-900 px-5 py-3 font-medium text-white transition-all hover:border-cyan-500 hover:bg-zinc-800 hover:text-cyan-400 lg:self-auto"
+      >
+        <ArrowLeft size={18} />
+        Back to Home
+      </button>
+
 
         {/* Search + Notification */}
         <div className="flex items-center gap-4">

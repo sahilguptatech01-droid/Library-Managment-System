@@ -1,1 +1,2 @@
-export const API_URL="https://library-managment-system-d0gy.onrender.com"
+export const API_URL=import.meta.env.VITE_API_URL
+

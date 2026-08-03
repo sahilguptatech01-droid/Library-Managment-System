@@ -2,6 +2,8 @@ import axios from "axios"
 import { useQuery } from "@tanstack/react-query"
 import { useNavigate, useParams } from "react-router-dom"
 import Loading from "./Loading"
+import { getToken } from "@clerk/react"
+import { API_URL } from "../config"
 
 
 
@@ -12,14 +14,16 @@ const Card = () => {
    const { isPending, error, data } = useQuery({
     queryKey: ['id'],
     // staleTime:1500,
-      queryFn: async () =>
-      await axios(`http://localhost:3000/students/detail/${id}`,{
-       
-       withCredentials:true
-     }
-      ).then((res)=>
-        res.data
-      )
+      queryFn: async () =>{
+        const token=await getToken()
+           const response=await axios.get(`${API_URL}/students/detail/${id}`,{
+          headers:{
+          Authorization: `Bearer ${token}`,    
+      }
+     })
+    return response.data
+      }
+   
   })
 
    if (isPending) return <Loading/>

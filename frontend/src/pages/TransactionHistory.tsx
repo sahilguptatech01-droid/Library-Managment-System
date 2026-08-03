@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ArrowLeft,Calendar,CreditCard,IndianRupee } from "lucide-react";
 import Loading from "../compoents/Loading";
+import { getToken } from "@clerk/react";
 // import GlobalError from "../compoents/GlobalError";
 
 
@@ -15,8 +16,12 @@ export default function TransactionHistory() {
   queryKey: ['transaction', id],
 
   queryFn: async () => {
+    const token=await getToken()
     const res = await axios.get(`${API_URL}/fees/transactions/${id}`,{
-        withCredentials:true
+      headers:{
+              Authorization: `Bearer ${token}`,
+
+      }
     });
     return res.data;
   }

@@ -11,8 +11,11 @@ import { router as adminRoute } from "./routes/admin.routes"
 const app=express()
 app.use(express.json())
 app.use(cors({
-    origin:["http://localhost:5173",
-     "https://libraryboy.netlify.app",],
+    origin:[
+    "http://localhost:5173",
+     process.env.FRONTEND_URL as string,
+    ]
+    ,
     credentials:true 
 }))
 app.use(clerkMiddleware())

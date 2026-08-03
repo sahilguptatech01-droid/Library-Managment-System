@@ -3,14 +3,20 @@ import { useQuery } from "@tanstack/react-query";
 import StatsCard from "./StatsCard"
 import axios from "axios";
 import { API_URL } from "../config";
-
+import { useAuth } from "@clerk/react";
 
 const StatsGrid = () => {
+  const {getToken}=useAuth()
+  
   const {data}=useQuery({
     queryKey:['stats'],
     queryFn:async()=>{
+      const token=await getToken()
       const res=await axios.get(`${API_URL}/admin/stats`,{
-        withCredentials:true
+        headers:{
+              Authorization: `Bearer ${token}`,
+
+        }
       })
       return res.data
     }
@@ -19,7 +25,7 @@ const StatsGrid = () => {
   
   
   return (
-    <div className="grid gap-6 p-6 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="grid gap-6 p-6 sm:grid-cols-2 xl:grid-cols-4">
 
             <StatsCard
             title="Revenue"
@@ -33,6 +39,10 @@ const StatsGrid = () => {
 
             <StatsCard
             title="Notifications"
+            value="0"
+            />
+              <StatsCard
+            title="Pending Fees"
             value="0"
             />
     </div>

@@ -4,6 +4,7 @@ import axios from "axios"
 import { API_URL } from "../config"
 import { useParams } from "react-router-dom"
 import StudentForm from "../compoents/StudentForm"
+import { getToken } from "@clerk/react"
 
 const EditStudent = () => {
   const navigate=useNavigate()
@@ -13,9 +14,13 @@ const EditStudent = () => {
   const {id}=useParams()
   useEffect(() => {
     const fetchStudent = async () => {
+      const token=await getToken()
       try {
         const response = await axios.get(`${API_URL}/students/detail/${id}`, {
-          withCredentials: true,
+          headers:{
+                  Authorization: `Bearer ${token}`,
+
+          }
         });
         setData(response.data.details)
         
