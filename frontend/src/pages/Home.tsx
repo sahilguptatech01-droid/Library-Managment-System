@@ -3,14 +3,11 @@
 // import Navbar from "../compoents/NavBar";
 
 import {
-  ArrowRight,
   Building2,
   Users,
   Wallet,
   BellRing,
   BadgeAlert,
-  Armchair,
-  ClipboardCheck,
   BarChart3,
   CheckCircle2,
 } from "lucide-react";
@@ -44,16 +41,6 @@ export default function Home() {
       desc: "Automatically calculate late fees and maintain outstanding balances.",
     },
     {
-      icon: <Armchair className="h-8 w-8 text-purple-400" />,
-      title: "Seat Management",
-      desc: "Assign seats, monitor occupancy and avoid duplicate seat allocations.",
-    },
-    {
-      icon: <ClipboardCheck className="h-8 w-8 text-sky-400" />,
-      title: "Attendance Tracking",
-      desc: "Track student check-ins and check-outs with daily attendance reports.",
-    },
-    {
       icon: <BarChart3 className="h-8 w-8 text-emerald-400" />,
       title: "Business Analytics",
       desc: "Monitor revenue, occupancy, collections and business performance in real time.",
@@ -68,7 +55,7 @@ export default function Home() {
         <div className="absolute right-10 bottom-10 h-96 w-96 rounded-full bg-cyan-500/20 blur-[120px]" />
       </div>
 
-     <Navbar/>
+      <Navbar />
 
       {/* Hero */}
       <section className="mx-auto max-w-7xl px-6 pt-24 pb-20">
@@ -92,33 +79,22 @@ export default function Home() {
               branches from one powerful dashboard.
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
-              <button className="flex items-center gap-2 rounded-xl bg-linear-to-r from-violet-600 to-cyan-500 px-7 py-4 font-semibold transition hover:scale-105">
-                Start Free Trial
-                <ArrowRight size={18} />
-              </button>
-
-              <button className="rounded-xl border border-white/10 px-7 py-4 hover:bg-white/5">
-                Book Demo
-              </button>
-            </div>
-
             {/* Stats */}
 
-            <div className="mt-14 grid grid-cols-3 gap-8">
-              <div>
-                <h3 className="text-4xl font-bold">10+</h3>
-                <p className="mt-2 text-gray-500">Library Branches</p>
+            <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-md">
+                <h3 className="text-3xl font-bold sm:text-4xl">10+</h3>
+                <p className="mt-2 text-gray-400">Library Branches</p>
               </div>
 
-              <div>
-                <h3 className="text-4xl font-bold">1200+</h3>
-                <p className="mt-2 text-gray-500">Students Managed</p>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-md">
+                <h3 className="text-3xl font-bold sm:text-4xl">1200+</h3>
+                <p className="mt-2 text-gray-400">Students Managed</p>
               </div>
 
-              <div>
-                <h3 className="text-4xl font-bold">₹25L+</h3>
-                <p className="mt-2 text-gray-500">Fees Tracked</p>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-md">
+                <h3 className="text-3xl font-bold sm:text-4xl">₹25L+</h3>
+                <p className="mt-2 text-gray-400">Fees Tracked</p>
               </div>
             </div>
           </div>
@@ -126,32 +102,38 @@ export default function Home() {
           {/* Dashboard */}
 
           <div>
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
-              <div className="flex items-center justify-between">
+            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl sm:p-8">
+              {/* Header */}
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h3 className="text-xl font-semibold">Owner Dashboard</h3>
+                  <h3 className="text-xl font-semibold sm:text-2xl">
+                    Owner Dashboard
+                  </h3>
 
-                  <p className="text-gray-500">Live Business Overview</p>
+                  <p className="text-gray-400">Live Business Overview</p>
                 </div>
 
-                <span className="rounded-full bg-green-500/20 px-3 py-1 text-sm text-green-400">
-                  Live
+                <span className="w-fit rounded-full bg-green-500/20 px-4 py-1 text-sm text-green-400">
+                  ● Live
                 </span>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-5">
+              <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {[
                   ["Today's Collection", "₹18,450"],
                   ["Active Students", "486"],
-                  ["Available Seats", "38"],
                   ["Pending Fees", "₹12,800"],
+
                 ].map(([title, value]) => (
                   <div
                     key={title}
-                    className="rounded-2xl border border-white/5 bg-slate-900 p-6"
+                    className="rounded-2xl border border-white/5 bg-slate-900 p-6 transition hover:-translate-y-1 hover:border-violet-500/40"
                   >
-                    <p className="text-gray-400">{title}</p>
-                    <h4 className="mt-2 text-3xl font-bold">{value}</h4>
+                    <p className="text-sm text-gray-400">{title}</p>
+
+                    <h4 className="mt-2 text-2xl font-bold sm:text-3xl">
+                      {value}
+                    </h4>
                   </div>
                 ))}
               </div>
@@ -163,7 +145,6 @@ export default function Home() {
                   {[
                     "3 Library Branches",
                     "486 Active Students",
-                    "91% Seat Occupancy",
                     "24 Membership Renewals",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-3">
@@ -225,7 +206,7 @@ export default function Home() {
               Get Started in
               <span className="bg-linear-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
                 {" "}
-                4 Easy Steps
+                3 Easy Steps
               </span>
             </h2>
 
@@ -235,7 +216,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
                 step: "01",
@@ -249,11 +230,6 @@ export default function Home() {
               },
               {
                 step: "03",
-                title: "Assign Seats",
-                desc: "Allocate fixed or flexible seats and monitor occupancy.",
-              },
-              {
-                step: "04",
                 title: "Track Business",
                 desc: "Monitor fees, attendance, collections and notifications from one dashboard.",
               },
@@ -334,7 +310,7 @@ export default function Home() {
 
       {/* CTA */}
 
-      <section className="pb-24">
+      {/* <section className="pb-24">
         <div className="mx-auto max-w-6xl px-6">
           <div className="overflow-hidden rounded-[40px] bg-linear-to-r from-violet-700 via-violet-600 to-cyan-600 p-14 text-center">
             <h2 className="text-5xl font-black">
@@ -360,11 +336,11 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
 
-      <footer className="border-t border-white/10">
+      {/* <footer className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-12">
           <div className="grid gap-10 md:grid-cols-4">
             <div>
@@ -394,7 +370,6 @@ export default function Home() {
               <ul className="mt-6 space-y-3 text-gray-400">
                 <li>Dashboard</li>
                 <li>Student Management</li>
-                <li>Seat Management</li>
                 <li>Attendance</li>
               </ul>
             </div>
@@ -428,6 +403,79 @@ export default function Home() {
             © 2026 StudySpace. All Rights Reserved.
           </div>
         </div>
+      </footer> */}
+      <footer className="border-t border-white/10 bg-[#09090B]">
+  <div className="mx-auto max-w-7xl px-6 py-12">
+
+    <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+
+      {/* Brand */}
+      <div>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-r from-violet-600 to-cyan-500 font-bold text-white">
+            S
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-white">
+              StudySpace
+            </h3>
+
+            <p className="text-sm text-gray-400">
+              Library Management
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-4 text-sm leading-6 text-gray-400">
+          Manage students, fees and attendance with one simple dashboard.
+        </p>
+      </div>
+
+      {/* Product */}
+      <div>
+        <h4 className="font-semibold text-white">Product</h4>
+
+        <ul className="mt-4 space-y-2 text-sm text-gray-400">
+          <li>Dashboard</li>
+          <li>Students</li>
+          <li>Attendance</li>
+        </ul>
+      </div>
+
+      {/* Company */}
+      <div>
+        <h4 className="font-semibold text-white">Company</h4>
+
+        <ul className="mt-4 space-y-2 text-sm text-gray-400">
+          <li>About</li>
+          <li>Contact</li>
+          <li>Support</li>
+        </ul>
+      </div>
+
+      {/* CTA */}
+      <div>
+        <h4 className="font-semibold text-white">
+          Get Started
+        </h4>
+
+        <p className="mt-4 text-sm text-gray-400">
+          Start managing your library today.
+        </p>
+
+        <button className="mt-5 rounded-lg bg-linear-to-r from-violet-600 to-cyan-500 px-5 py-2.5 font-medium text-white transition hover:opacity-90">
+          Schedule Demo
+        </button>
+      </div>
+
+    </div>
+
+    <div className="mt-10 border-t border-white/10 pt-6 text-center text-sm text-gray-500">
+      © 2026 StudySpace. All rights reserved.
+    </div>
+
+  </div>
       </footer>
     </div>
   );

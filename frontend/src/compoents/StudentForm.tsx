@@ -58,26 +58,51 @@ const StudentForm = ({onSubmit,intialData,mode,text}:StudentProps) => {
 
 
   return (
-<div className="min-h-screen bg-zinc-950 flex items-center justify-center p-6">
-  <div className="w-full max-w-4xl rounded-2xl border border-zinc-800 bg-zinc-900 p-4 shadow-2xl">
+<div className="min-h-screen bg-zinc-950 px-4 py-8 sm:px-6 lg:px-8">
+  <div className="mx-auto w-full max-w-5xl rounded-3xl border border-zinc-800 bg-zinc-900 shadow-2xl">
 
+    {/* Header */}
+    <div className="flex flex-col gap-4 border-b border-zinc-800 p-6 sm:flex-row sm:items-center sm:justify-between">
 
+      <div>
+        <h1 className="text-2xl font-bold text-white">
+          {mode === "Edit" ? "Edit Student" :"Add Student"}
+        </h1>
+
+        <p className="mt-1 text-sm text-zinc-400">
+          Fill in the student information below.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        onClick={() => window.history.back()}
+        className="rounded-xl border border-zinc-700 bg-zinc-800 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-700"
+      >
+        ← Back
+      </button>
+
+    </div>
+
+    {/* Form */}
     <form
       onSubmit={handleSubmit}
-      className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10"
+      className="grid grid-cols-1 gap-6 p-6 md:grid-cols-2"
     >
+
       {/* Student Name */}
       <div>
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Student Name
         </label>
+
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
           placeholder="Enter student name"
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         />
       </div>
 
@@ -86,13 +111,14 @@ const StudentForm = ({onSubmit,intialData,mode,text}:StudentProps) => {
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Father Name
         </label>
+
         <input
           type="text"
           name="fatherName"
           value={formData.fatherName}
           onChange={handleChange}
           placeholder="Enter father name"
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         />
       </div>
 
@@ -101,13 +127,14 @@ const StudentForm = ({onSubmit,intialData,mode,text}:StudentProps) => {
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Mother Name
         </label>
+
         <input
           type="text"
           name="motherName"
           value={formData.motherName}
           onChange={handleChange}
           placeholder="Enter mother name"
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         />
       </div>
 
@@ -116,13 +143,14 @@ const StudentForm = ({onSubmit,intialData,mode,text}:StudentProps) => {
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Mobile Number
         </label>
+
         <input
           type="tel"
           name="mobileNo"
           value={formData.mobileNo}
           onChange={handleChange}
           placeholder="9876543210"
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         />
       </div>
 
@@ -131,26 +159,28 @@ const StudentForm = ({onSubmit,intialData,mode,text}:StudentProps) => {
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Address
         </label>
+
         <textarea
+          rows={4}
           name="address"
           value={formData.address}
           onChange={handleChange}
-          rows={3}
           placeholder="Enter full address"
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder:text-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         />
       </div>
 
-      {/* Identity Proof */}
+      {/* Identity */}
       <div>
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Identity Proof
         </label>
+
         <select
           name="identityProof"
           value={formData.identityProof}
           onChange={handleChange}
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         >
           <option value="ADHARCARD">Aadhar Card</option>
           <option value="LICENSE">Driving License</option>
@@ -163,27 +193,40 @@ const StudentForm = ({onSubmit,intialData,mode,text}:StudentProps) => {
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Status
         </label>
+
         <select
           name="status"
           value={formData.status}
           onChange={handleChange}
-          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+          className="w-full rounded-xl border border-zinc-700 bg-zinc-800 px-4 py-3 text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
         >
           <option value="ACTIVE">ACTIVE</option>
           <option value="INACTIVE">INACTIVE</option>
         </select>
       </div>
 
-      {/* Button */}
-      <div className="md:col-span-2">
+      {/* Buttons */}
+      <div className="mt-4 flex flex-col gap-3 md:col-span-2 sm:flex-row sm:justify-end">
+
+        <button
+          type="button"
+          onClick={() => window.history.back()}
+          className="rounded-xl border border-zinc-700 bg-zinc-800 px-6 py-3 text-white transition hover:bg-zinc-700"
+        >
+          Cancel
+        </button>
+
         <button
           type="submit"
-          className="w-full rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-500 active:scale-[0.98]"
+          className="rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-8 py-3 font-semibold text-white transition hover:from-blue-500 hover:to-indigo-500 active:scale-95"
         >
           {text}
         </button>
+
       </div>
+
     </form>
+
   </div>
 </div>
   )

@@ -12,7 +12,7 @@ const CreateStudent = () => {
     const [show,setShow]=useState(false)
 
   const handleSubmit=async (data:any)=>{
-    const token=getToken()
+    const token=await getToken()
     try{
 
       await axios.post(`${API_URL}/students/create`,
@@ -40,32 +40,32 @@ const CreateStudent = () => {
   }
 
   return (
-<div className="min-h-screen bg-zinc-950 px-4 py-10">
-  <div className="mx-auto max-w-5xl">
+<div className="min-h-screen bg-zinc-950 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+  <div className="mx-auto w-full max-w-5xl">
 
     {/* Page Header */}
-    <div className="mb-8">
-      <h1 className="text-3xl font-bold text-white">
+    <div className="mb-6 sm:mb-8">
+      <h1 className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
         🎓 Student Registration
       </h1>
 
-      <p className="mt-2 text-zinc-400">
+      <p className="mt-2 text-sm text-zinc-400 sm:text-base">
         Add a new student by filling in the details below.
       </p>
     </div>
 
     {/* Success Message */}
     {show && (
-      <div className="mb-6 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4">
-        <div className="flex items-center gap-3">
+      <div className="mb-6 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 sm:p-5">
+        <div className="flex items-start gap-3">
           <span className="text-xl">✅</span>
 
           <div>
-            <h3 className="font-semibold text-emerald-400">
+            <h3 className="text-sm font-semibold text-emerald-400 sm:text-base">
               Student Registered Successfully
             </h3>
 
-            <p className="text-sm text-emerald-300">
+            <p className="mt-1 text-xs text-emerald-300 sm:text-sm">
               {message}
             </p>
           </div>
@@ -74,7 +74,7 @@ const CreateStudent = () => {
     )}
 
     {/* Form Card */}
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4 shadow-2xl sm:p-6 lg:p-8">
 
       <StudentForm
         onSubmit={handleSubmit}
