@@ -4,4 +4,4 @@ import { auth } from "../middleware/auth";
 
 export const router=Router()
 
-router.get('/stats',auth,getStats)
+router.get('/dashboard',auth,getStats)

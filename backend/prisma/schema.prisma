@@ -18,6 +18,7 @@ model Library {
   clerkUserId String    @unique
   shifts      Shift[]
   students    Student[]
+  payments     StudentPayment[]
 }
 
 model Shift {
@@ -26,6 +27,7 @@ model Shift {
   libraryId String
   library   Library   @relation(fields: [libraryId], references: [id], onDelete: Cascade)
   students  Student[]
+
 }
 
 model Student {
@@ -50,6 +52,7 @@ model Student {
 model StudentPayment {
   id          String   @id @default(uuid())
   studentId   String
+  libraryId   String
   paymentDate DateTime
   month       String
   paymentMode Mode     @default(CASH)
@@ -57,6 +60,7 @@ model StudentPayment {
   createdAt   DateTime @default(now())
   amount      Decimal  @db.Decimal(10, 2)
   student     Student  @relation(fields: [studentId], references: [id])
+  library      Library  @relation(fields: [libraryId],references: [id])
 }
 
 enum Identity {

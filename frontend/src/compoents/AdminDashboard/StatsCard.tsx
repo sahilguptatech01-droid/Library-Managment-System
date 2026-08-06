@@ -1,7 +1,12 @@
+interface Stats{
+  title:string,
+  value:number
+}
+
+
 const StatsCard = ({
-  title = "Revenue",
-  value = "10000",
-}) => {
+  title,value
+}:Stats) => {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 p-6 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/50 hover:shadow-indigo-500/10">
 

@@ -3,6 +3,8 @@ import { getAuth } from "@clerk/express"
 
 export const auth=(req:Request,res:Response,next:NextFunction)=>{
      const { isAuthenticated, userId,sessionId } = getAuth(req)     
+
+     
      
      
      

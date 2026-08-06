@@ -8,7 +8,6 @@ import Loading from "../compoents/Loading";
 export default function ProtectedRoute() {
   const { isLoaded, isSignedIn } = useAuth();
   const{isLoaded:userauth,user}=useUser()
-  console.log(user);
   
   
   if (!isLoaded||!userauth) {

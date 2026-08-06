@@ -1,0 +1,81 @@
+{
+  "success": true,
+  "data": {
+    "revenue": 45200,
+    "notifications": 7,
+    "students": 1250
+  },
+  "meta": {
+    "timestamp": "2026-07-23T17:15:30Z"
+  }
+}
+
+{
+  "success": false,
+  "error": {
+    "code": "AUTH_TOKEN_EXPIRED",
+    "message": "Your session has expired. Please log in again.",
+    "details": null
+  }
+}
+
+
+GET /api/dashboard/stats-summary
+Description: Fetches aggregated metrics for the main admin dashboard view.
+Auth Required: True (Bearer Token)
+
+[Request Query Params]
+- range: "7d" | "30d" | "all" (Optional, default: "30d")
+
+[Success Response - 200 OK]
+{
+  "revenue": 45200,       // Total income in cents or standard float
+  "notifications": 7,     // Count of unread admin notifications
+  "students": 1250        // Total active student accounts
+}
+
+[Error Responses]
+- 401 Unauthorized: Invalid or missing token.
+- 500 Internal Error: Database aggregation timeout.
+
+{
+  "success": true,
+  "data": {
+    "students": [
+      {
+        "id": "fa39c2d8-5b14-41e9-a7c3-8f0a6b12d49e",
+        "shiftId": "35c3836d-4713-479d-b52a-9a4792f3188d",
+        "name": "Kabir Malhotra",
+        "fatherName": "Sanjay Malhotra",
+        "motherName": "Poonam Malhotra",
+        "address": "55 Model Town, Delhi",
+        "mobileNo": "9876543222",
+        "identityProof": "ADHARCARD",
+        "joiningDate": "2026-05-20T00:00:00.000Z",
+        "status": "ACTIVE",
+        "createdAt": "2026-05-20T00:00:00.000Z",
+        "shift": {
+          "shifts": "2:00pm to 8:00 pm"
+        }
+      }
+    ],
+    "pagination": {
+      "totalRecords": 1,
+      "currentPage": 1,
+      "totalPages": 1,
+      "limit": 10
+    }
+  },
+  "error": null
+}
+
+
+{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "DATABASE_FETCH_ERROR",
+    "message": "Unable to safely retrieve the student roster records.",
+    "details": "Connection timeout occurred during relation join mapping."
+  }
+}

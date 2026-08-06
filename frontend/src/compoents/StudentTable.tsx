@@ -2,16 +2,19 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { API_URL } from "../config"
 import { useNavigate } from "react-router-dom";
-import Loading from "./Loading";
 import { getToken } from "@clerk/react";
+import GlobalError from "./GlobalError";
+import CardSkeleton from "./CardSkeleton";
+import { UserPlus } from "lucide-react";
 
 
 const Box = () => {
   const navigate=useNavigate()
   // const {getToken}=useAuth()
-  const { isPending, error, data } = useQuery({
+  const { isLoading, isError, data } = useQuery({
     queryKey: ['getStudent '],
     staleTime:10*1000000,
+    retry:1,
    
       // 2. Stop refetching when user clicks back onto the browser tab
     // refetchOnWindowFocus: false, 
@@ -36,10 +39,24 @@ const Box = () => {
       
   })
 
-  if (isPending) return <Loading/>
-  if (error) return 'An error has occurred: ' + error.message
+  if (isLoading) return (
+    <>
+  {[...Array(5)].map((_, index) => (
+    <CardSkeleton key={index} />
+  ))}
+</>
+  )
+  if (isError) return <GlobalError/>
   if(data.students.length===0){
-    return <h2>No student</h2>
+    return (
+       <div className="py-10 text-center">
+          <UserPlus className="mx-auto text-slate-600" size={42} />
+
+          <p className="mt-4 text-slate-400">
+            No students found.
+          </p>
+        </div>
+    )
   }
  
   return (
@@ -77,12 +94,7 @@ const Box = () => {
           💳 Pay Fee
         </button>
 
-        <button
-          onClick={() => navigate(`/transactions/${x.id}`)}
-          className="rounded-xl bg-amber-500 px-5 py-3 font-medium text-white transition hover:bg-amber-600 hover:shadow-lg hover:shadow-amber-500/30"
-        >
-          📜 Transaction History
-        </button>
+
 
         <button
           onClick={() => navigate(`/details/${x.id}`)}

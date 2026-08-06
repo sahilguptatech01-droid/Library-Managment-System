@@ -10,6 +10,7 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import SignUpPage from './pages/SignUpPage'
 import Payment from './pages/Payment'
 import TransactionHistory from './pages/TransactionHistory'
+import StudentsPage from './pages/StudentsPage'
 
 
 
@@ -41,9 +42,11 @@ export default function App() {
         <Route path="/" element={<Home/>}/> 
         <Route path="/sign-up" element={<SignUpPage/>}/> 
         <Route path="/create" element={<Create/>}/>
+        
 
         {/* Protected Route */}
         <Route element={<ProtectedRoute/>}>        
+        <Route path="/students" element={<StudentsPage/>}/>
         <Route path="/payment/:id" element={<Payment/>}/>
         <Route path="/details/:id" element={<Card/>}/>
         <Route path="/dashboard" element={<AdminDahboard/>}/>
