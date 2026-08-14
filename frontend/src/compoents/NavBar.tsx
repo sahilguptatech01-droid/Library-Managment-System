@@ -53,7 +53,7 @@ export default function Navbar() {
             </Link>
 
             <Link
-              to="/contact"
+              to="/"
               className="transition hover:text-cyan-400"
             >
               Contact

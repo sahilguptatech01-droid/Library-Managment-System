@@ -3,29 +3,32 @@ import { API_URL } from "../config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "@clerk/react";
+import { useSession } from "@clerk/react";
+
 
 
 export const Create = () => {
-  
-    const[form,setForm]=useState({
-        name:"",
-        ownerName:"",
-        phoneNo:"",
-        address:""
+  const{session}=useSession()
+  const[form,setForm]=useState({
+    name:"",
+    ownerName:"",
+    phoneNo:"",
+    address:""
         
     })
     const [message,setMessage]=useState("")
     const navigate=useNavigate()
     
-
+    
     function handleChange(e:any){
       const {name,value}=e.target;
         setForm((prev)=>({...prev,[name]:value}))
-
-    }
-
-    async function handleSubmit(e:any){
-      const token=await getToken()
+        
+      }
+      
+      async function handleSubmit(e:any){
+        const token=await getToken()
+        // const { session } = useSession();
         setMessage("")
         e.preventDefault()
         try {
@@ -40,13 +43,14 @@ export const Create = () => {
         )
             if(response){
               setMessage("Library Created Succesfully")
+              await session?.reload(); 
             }
             setTimeout(()=>{
-                navigate('/')
-            },2000)
+                navigate('/dashboard')
+            },3000)
         
         } catch (error) {
-            setMessage("Failed to create or Already library created in past ")
+            setMessage("Failed to create or Already library created ")
         }
     }
 
@@ -127,6 +131,7 @@ export const Create = () => {
       </div>
 
       {/* Button */}
+      
       <button
         type="submit"
         className="w-full rounded-xl bg-linear-to-r from-indigo-600 to-purple-600 py-3 text-white font-semibold hover:from-indigo-500 hover:to-purple-500 transition duration-300"

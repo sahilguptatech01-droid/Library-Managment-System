@@ -4,14 +4,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import { getToken } from "@clerk/react";
 import { API_URL } from "../config";
+import GlobalError from "./GlobalError";
 
 const Card = () => {
   const { id } = useParams(); // get id from url
   const navigate = useNavigate();
 
-  const { isPending, error, data } = useQuery({
-    queryKey: ["id"],
-    // staleTime:1500,
+  const { isPending, isError, data } = useQuery({
+    queryKey: ["id",id],
+    staleTime:1500,
     queryFn: async () => {
       const token = await getToken();
       const response = await axios.get(`${API_URL}/students/detail/${id}`, {
@@ -25,7 +26,7 @@ const Card = () => {
 
   if (isPending) return <Loading />;
 
-  if (error) return <div>Try after sometime </div>;
+  if (isError) return <GlobalError/>;
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-950 via-gray-900 to-black flex items-center justify-center p-6">
@@ -82,7 +83,7 @@ const Card = () => {
 
             <div className="bg-gray-900 rounded-xl p-4 border border-gray-800">
               <p className="text-xs uppercase text-gray-400 tracking-widest">
-                Shiftcd
+                Shift Timing
               </p>
               {/* <p className="text-lg text-white mt-1">
             {data.details.shift.shifts}
@@ -103,7 +104,7 @@ const Card = () => {
                 Joining Date
               </p>
               <p className="text-lg text-white mt-1">
-                {data.details.joiningDate}
+                {data.details.joiningDate.split('T')[0]}
               </p>
             </div>
 

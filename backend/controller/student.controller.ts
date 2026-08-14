@@ -57,7 +57,6 @@ export const getStudent=async(req:Request,res:Response)=>{
                     address:true,
                     identityProof:true,
                     status:true,
-                    mobileNo:true,
                     joiningDate:true,
                     shiftId:true
                 },

@@ -24,13 +24,13 @@ export default function QuickActions() {
       color: "from-emerald-500 to-green-500",
       route: "/students",
     },
-    {
-      title: "Manage Students",
-      description: "View and edit students",
-      icon: BookOpen,
-      color: "from-violet-500 to-fuchsia-500",
-      route: "/students",
-    },
+    // {
+    //   title: "Manage Students",
+    //   description: "View and edit students",
+    //   icon: BookOpen,
+    //   color: "from-violet-500 to-fuchsia-500",
+    //   route: "/students",
+    // },
  
   ];
 

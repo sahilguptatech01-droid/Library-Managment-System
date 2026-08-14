@@ -5,7 +5,7 @@ import {
   IndianRupee,
   CalendarRange,
 } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation,useQueryClient } from "@tanstack/react-query";
 import { API_URL } from "../config";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,6 +13,7 @@ import { getToken } from "@clerk/react";
 
 export default function PaymentForm() {
   const navigate=useNavigate()
+  const queryClient = useQueryClient(); 
   const { id } = useParams();
   const mutation = useMutation({
     mutationFn: async (data: PaymentPayload) => {
@@ -24,6 +25,12 @@ export default function PaymentForm() {
         }
       });
       return response
+    },    onSuccess: () => {
+      
+      // 3. Force the student list query to fetch fresh data from Prisma instantly
+      queryClient.invalidateQueries({ queryKey: ['stats'] });
+      queryClient.invalidateQueries({ queryKey: ['transaction'] });
+
     },
 
   });
@@ -85,6 +92,8 @@ export default function PaymentForm() {
       paymentDate: new Date(formData.paymentDate),
       amount:Number(formData.amount)
     });
+
+    
 
 
     setTimeout(() => {

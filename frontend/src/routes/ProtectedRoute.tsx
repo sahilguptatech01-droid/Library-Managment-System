@@ -16,10 +16,12 @@ export default function ProtectedRoute() {
   if (!isSignedIn) {
     return <Navigate to="/sign-up" replace />;
   }
+  if(isSignedIn){
+    <Navigate to="/create" replace/>
+  }
   if(!user?.publicMetadata?.libraryCreated){
     return <Navigate to="/create" replace />;
   }
-
 
 
   return <Outlet />;

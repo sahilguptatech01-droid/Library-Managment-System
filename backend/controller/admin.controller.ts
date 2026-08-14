@@ -21,7 +21,7 @@ export const getStats=async(req:Request,res:Response)=>{
     // 2. Use Prisma's aggregate feature to sum up the amounts
     const aggregation = await prisma.studentPayment.aggregate({
       where: {
-        paymentDate: {
+        createdAt: {
           gte: startOfMonth,
           lte: endOfMonth
         }

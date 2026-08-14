@@ -21,6 +21,7 @@ export const feeSchema=z.object({
     studentId:z.string(),
     paymentDate:z.string(),
     month:z.enum(month)
+    
 
 })
 

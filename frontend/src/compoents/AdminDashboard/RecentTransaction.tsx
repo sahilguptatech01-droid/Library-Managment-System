@@ -3,6 +3,7 @@ import {
   CreditCard,
   IndianRupee,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Transaction {
   id: number;
@@ -21,6 +22,7 @@ interface Props {
 export default function RecentTransactions({
   transactions,
 }: Props) {
+  const navigate=useNavigate()
 
   return (
     <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-xl backdrop-blur-xl">
@@ -39,7 +41,7 @@ export default function RecentTransactions({
           </p>
         </div>
 
-        <button
+        <button onClick={()=>navigate('/transactions')}
           className="flex items-center gap-2 text-sm text-cyan-400 transition hover:text-cyan-300"
         >
           View All

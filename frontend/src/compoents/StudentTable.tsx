@@ -14,7 +14,7 @@ const Box = () => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ['getStudent '],
     staleTime:10*1000000,
-    retry:1,
+    retry:2,
    
       // 2. Stop refetching when user clicks back onto the browser tab
     // refetchOnWindowFocus: false, 
@@ -78,8 +78,8 @@ const Box = () => {
             {x.name}
           </h2>
 
-          <p className="mt-1 text-sm text-slate-400">
-            Student ID: #{x.id}
+          <p className="mt-1 text-sm text-white">
+            Phone No: {x.mobileNo}
           </p>
         </div>
       </div>

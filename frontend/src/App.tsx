@@ -11,6 +11,7 @@ import SignUpPage from './pages/SignUpPage'
 import Payment from './pages/Payment'
 import TransactionHistory from './pages/TransactionHistory'
 import StudentsPage from './pages/StudentsPage'
+import TransactionsPage from './pages/TransactionsPage'
 
 
 
@@ -47,6 +48,7 @@ export default function App() {
         {/* Protected Route */}
         <Route element={<ProtectedRoute/>}>        
         <Route path="/students" element={<StudentsPage/>}/>
+        <Route path="/transactions" element={<TransactionsPage/>}/>
         <Route path="/payment/:id" element={<Payment/>}/>
         <Route path="/details/:id" element={<Card/>}/>
         <Route path="/dashboard" element={<AdminDahboard/>}/>
