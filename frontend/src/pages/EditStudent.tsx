@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { API_URL } from "../config"
@@ -17,15 +17,26 @@ const EditStudent = () => {
   const updateData=async(data:StudentFormProp,id:string)=>
  { 
     const token=await getToken()
-
-  await axios.patch(`${API_URL}/students/${id}`,
-    data,{
-      headers:{
-                  Authorization: `Bearer ${token}`,
-
+    try{
+      
+        await axios.patch(`${API_URL}/students/${id}`,
+          data,{
+            headers:{
+                        Authorization: `Bearer ${token}`,
+      
+          }
+          }
+        )
+      
+    }catch(error:any){
+      const errorMessage = error.response?.data?.message || "Server error";
+    
+  
+      throw new Error(errorMessage);
+        
+      
     }
-    }
-  )
+    
 
    
 }
@@ -45,8 +56,12 @@ const EditStudent = () => {
       
       
       
-      return response
-    } catch (error) {
+    } catch (error:any) {
+           const errorMessage = error.response?.data?.message || "Server error";
+    
+    // 2. CRITICAL: Throw it out of the catch block!
+      throw new Error(errorMessage);
+        
       
     }
   }
@@ -58,7 +73,7 @@ const EditStudent = () => {
 
 
   
-  const {isError}=useQuery({
+  useQuery({
     queryKey:['studentData',id],
     queryFn:fetchStudent
   })

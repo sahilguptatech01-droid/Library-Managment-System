@@ -1,4 +1,4 @@
-import { ArrowLeft, Download } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 export default function TransactionHeader() {
   return (
