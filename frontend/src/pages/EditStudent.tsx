@@ -5,51 +5,82 @@ import { API_URL } from "../config"
 import { useParams } from "react-router-dom"
 import StudentForm from "../compoents/StudentForm"
 import { getToken } from "@clerk/react"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { type StudentFormProp } from "../compoents/StudentForm"
 
 const EditStudent = () => {
+  const[loading,setLoading]=useState<boolean>(true)
+  const queryClient=useQueryClient()
   const navigate=useNavigate()
-  const [data,setData]=useState()
-  const [message,setMessage]=useState('')
-  const [show,setShow]=useState(false)
+  const [data,setData]=useState<StudentFormProp>()
   const {id}=useParams()
-  useEffect(() => {
-    const fetchStudent = async () => {
-      const token=await getToken()
-      try {
-        const response = await axios.get(`${API_URL}/students/detail/${id}`, {
-          headers:{
+  const updateData=async(data:StudentFormProp,id:string)=>
+ { 
+    const token=await getToken()
+
+  await axios.patch(`${API_URL}/students/${id}`,
+    data,{
+      headers:{
                   Authorization: `Bearer ${token}`,
 
-          }
-        });
-        setData(response.data.details)
-        
-       return response
-      } catch (error) {
-        // console.error("Error fetching data", error);
-        setMessage('Try after sometime')
-        setShow(true)
+    }
+    }
+  )
 
-      }
-    };
+   
+}
+  const fetchStudent = async () => {
+    const token=await getToken()
+    
+    try {
+      const response = await axios.get(`${API_URL}/students/detail/${id}`, {
+        headers:{
+          Authorization: `Bearer ${token}`,
+          
+        }
+      });
+      setData(response.data.details)
+      setLoading(false)
+      return response.data.details
+      
+      
+      
+      return response
+    } catch (error) {
+      
+    }
+  }
+  
+  const mutation=useMutation({
+    mutationFn:(data:StudentFormProp)=>updateData(data,id as string)
+  
+  })
 
-    if (id) fetchStudent();
-  }, [id]);
+
+  
+  const {isError}=useQuery({
+    queryKey:['studentData',id],
+    queryFn:fetchStudent
+  })
+  
 
   
 
-  async function handleSubmit(data:any){
-    await axios.patch(`${API_URL}/students/${id}`,
-      data,{
-        withCredentials:true
-      }
-    )
-
-       setMessage('Updated Successfully')
-        setShow(true)
+  async function handleSubmit(data:StudentFormProp){
+    setLoading(true)
+    mutation.mutate(data,{
+      onSuccess:()=>{
+            queryClient.invalidateQueries({queryKey:['getStudent']})
+        queryClient.invalidateQueries({queryKey:['stats']})
         setTimeout(() => {
           navigate('/dashboard')
         }, 2000);
+      },
+      onSettled:()=>{
+        setLoading(false)
+      }
+    })
+
     
   }
   return (
@@ -68,10 +99,21 @@ const EditStudent = () => {
     </div>
 
     {/* Success Message */}
-    {show && (
+    {mutation.isSuccess && (
       <div className="mb-6 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3">
         <p className="font-medium text-emerald-400">
-          ✅ {message}
+          ✅ Updated Successfully
+        </p>
+      </div>
+    )}
+
+    {/* Failed Message */}
+
+
+       {mutation.isError && (
+      <div className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3">
+        <p className="font-medium text-red-400">
+          ❌ Try after sometime
         </p>
       </div>
     )}
@@ -80,9 +122,10 @@ const EditStudent = () => {
     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">
 
       <StudentForm
+        loading={loading  }
         mode="Edit"
         text="Save Changes"
-        onSubmit={handleSubmit}
+        submit={handleSubmit}
         intialData={data}
       />
 

@@ -1,55 +1,29 @@
-import { useState } from "react";
 import {
   CalendarDays,
   CreditCard,
   IndianRupee,
   CalendarRange,
+  AlertCircle,
+  CheckCircle2,
+  Loader2
 } from "lucide-react";
 import { useMutation,useQueryClient } from "@tanstack/react-query";
 import { API_URL } from "../config";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
 import { getToken } from "@clerk/react";
+import { useForm,type SubmitHandler } from "react-hook-form";
+import { useParams,useNavigate } from "react-router-dom";
 
-export default function PaymentForm() {
-  const navigate=useNavigate()
-  const queryClient = useQueryClient(); 
-  const { id } = useParams();
-  const mutation = useMutation({
-    mutationFn: async (data: PaymentPayload) => {
-      const token=await getToken()
-      const response=await axios.post(`${API_URL}/fees/submit`, data, {
-        headers:{
-                  Authorization: `Bearer ${token}`,
-
-        }
-      });
-      return response
-    },    onSuccess: () => {
-      
-      // 3. Force the student list query to fetch fresh data from Prisma instantly
-      queryClient.invalidateQueries({ queryKey: ['stats'] });
-      queryClient.invalidateQueries({ queryKey: ['transaction'] });
-
-    },
-
-  });
 
   interface PaymentFormState {
     studentId: string | undefined;
-    paymentDate: string;
+    paymentDate: Date;
     paymentMode: "CASH" | "ONLINE";
     amount: number;
     month: string;
   }
 
-  interface PaymentPayload {
-    studentId: string | undefined;
-    paymentDate: Date; // 🚀 STRICT DATE OBJECT FOR THE DATABASE
-    paymentMode: "CASH" | "ONLINE";
-    amount: number;
-    month: string;
-  }
+
 
   const months = [
     "JANUARY",
@@ -66,94 +40,161 @@ export default function PaymentForm() {
     "DECEMBER",
   ];
 
-  const [formData, setFormData] = useState<PaymentFormState>({
-    studentId: id,
-    paymentDate: "",
-    paymentMode: "CASH",
-    amount: 200,
-    month: "JANUARY",
+export default function PaymentForm() {
+  const navigate=useNavigate()
+  const queryClient = useQueryClient(); 
+  
+  const { id } = useParams();
+  const mutation = useMutation({
+    mutationFn: async (data: PaymentFormState) => {
+      const token=await getToken()
+      const response=await axios.post(`${API_URL}/fees/submit`, data, {
+        headers:{
+                  Authorization: `Bearer ${token}`,
+
+        }
+      });
+      return response
+    },    onSuccess: () => {
+      
+      // 3. Force the student list query to fetch fresh data from Prisma instantly
+      queryClient.invalidateQueries({ queryKey: ['stats'] });
+      queryClient.invalidateQueries({ queryKey: ['transaction'] });
+      navigate('/dashboard')
+
+    },
+
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e: React.SubmitEvent) => {
-    e.preventDefault();
-    mutation.mutate({
-      ...formData,
-      paymentDate: new Date(formData.paymentDate),
-      amount:Number(formData.amount)
-    });
-
-    
 
 
-    setTimeout(() => {
-      navigate('/dashboard')
-    },5000);
-  };
+  const {register,handleSubmit,formState:{errors,isSubmitting}}=useForm<PaymentFormState>()
+  const onSubmit:SubmitHandler<PaymentFormState>=(data)=>{
+    const formData={...data,paymentDate:new Date(data.paymentDate),studentId:id}
+    mutation.mutate(formData)
+  }
+
+
+  
+
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-black flex items-center justify-center px-4 py-10">
-      <div className="w-full max-w-2xl rounded-3xl border border-slate-700 bg-slate-900/70 backdrop-blur-xl shadow-2xl p-8">
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-black px-4 py-10">
+      <div className="w-full max-w-2xl rounded-3xl border border-slate-700 bg-slate-900/70 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+  
+        {/* Header */}
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-white">Library Fee Payment</h1>
-
-          <p className="mt-2 text-slate-400">Fill payment details below</p>
+          <h1 className="text-3xl font-bold text-white sm:text-4xl">
+            Library Fee Payment
+          </h1>
+  
+          <p className="mt-2 text-slate-400">
+            Fill payment details below
+          </p>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Date */}
-
+  
+        {/* API Error */}
+        {mutation.isError && (
+          <div className="mb-6 flex items-start gap-3 rounded-2xl border border-red-500/30 bg-red-500/10 p-4">
+            <AlertCircle
+              size={22}
+              className="mt-0.5 shrink-0 text-red-400"
+            />
+  
+            <div>
+              <h3 className="font-semibold text-red-400">
+                Payment Failed
+              </h3>
+  
+              <p className="mt-1 text-sm text-red-300/80">
+                Something went wrong while saving the payment or Payment Already present.
+                Please try again.
+              </p>
+            </div>
+          </div>
+        )}
+  
+        {/* Success */}
+        {mutation.isSuccess && (
+          <div className="mb-6 flex items-start gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4">
+            <CheckCircle2
+              size={22}
+              className="mt-0.5 shrink-0 text-emerald-400"
+            />
+  
+            <div>
+              <h3 className="font-semibold text-emerald-400">
+                Payment Saved
+              </h3>
+  
+              <p className="mt-1 text-sm text-emerald-300/80">
+                The payment transaction has been successfully recorded.
+              </p>
+            </div>
+          </div>
+        )}
+  
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-6"
+        >
+  
+          {/* Payment Date */}
           <div>
-            <label className="mb-2 block text-slate-300 font-medium">
+            <label className="mb-2 block font-medium text-slate-300">
               Payment Date
             </label>
-
+  
             <div className="relative">
               <CalendarDays
                 size={20}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
               />
-
+  
               <input
                 type="date"
-                name="paymentDate"
-                value={formData.paymentDate}
-                onChange={handleChange}
-                required
-                className="w-full rounded-xl border border-slate-700 bg-slate-800 py-3 pl-12 pr-4 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500"
+                {...register("paymentDate", {
+                  required: "Payment date is required",
+                })}
+                className={`w-full rounded-xl border bg-slate-800 py-3 pl-12 pr-4 text-white outline-none transition focus:ring-2 ${
+                  errors.paymentDate
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                    : "border-slate-700 focus:border-emerald-500 focus:ring-emerald-500/20"
+                }`}
               />
             </div>
+  
+            {errors.paymentDate && (
+              <p className="mt-2 text-sm text-red-400">
+                {errors.paymentDate.message}
+              </p>
+            )}
           </div>
-
-          {/* Month */}
-
+  
+          {/* Fee Month */}
           <div>
-            <label className="mb-2 block text-slate-300 font-medium">
+            <label className="mb-2 block font-medium text-slate-300">
               Fee Month
             </label>
-
+  
             <div className="relative">
               <CalendarRange
                 size={20}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
               />
-
+  
               <select
-                name="month"
-                value={formData.month}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-slate-700 bg-slate-800 py-3 pl-12 pr-4 text-white outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500"
+                {...register("month", {
+                  required: "Fee month is required",
+                })}
+                className={`w-full rounded-xl border bg-slate-800 py-3 pl-12 pr-4 text-white outline-none transition focus:ring-2 ${
+                  errors.month
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                    : "border-slate-700 focus:border-emerald-500 focus:ring-emerald-500/20"
+                }`}
               >
+                <option value="">SELECT MONTH</option>
+  
                 {months.map((month) => (
                   <option key={month} value={month}>
                     {month}
@@ -161,74 +202,113 @@ export default function PaymentForm() {
                 ))}
               </select>
             </div>
+  
+            {errors.month && (
+              <p className="mt-2 text-sm text-red-400">
+                {errors.month.message}
+              </p>
+            )}
           </div>
-
+  
           {/* Payment Mode */}
-
           <div>
-            <label className="mb-2 block text-slate-300 font-medium">
+            <label className="mb-2 block font-medium text-slate-300">
               Payment Mode
             </label>
-
+  
             <div className="relative">
               <CreditCard
                 size={20}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
               />
-
+  
               <select
-                name="paymentMode"
-                value={formData.paymentMode}
-                onChange={handleChange}
-                className="w-full rounded-xl border border-slate-700 bg-slate-800 py-3 pl-12 pr-4 text-white outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500"
+                {...register("paymentMode", {
+                  required: "Payment mode is required",
+                })}
+                className={`w-full rounded-xl border bg-slate-800 py-3 pl-12 pr-4 text-white outline-none transition focus:ring-2 ${
+                  errors.paymentMode
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                    : "border-slate-700 focus:border-emerald-500 focus:ring-emerald-500/20"
+                }`}
               >
-                <option value="CASH">Cash</option>
-                <option value="ONLINE">Online</option>
+                <option value="">SELECT PAYMENT MODE</option>
+                <option value="CASH">CASH</option>
+                <option value="ONLINE">ONLINE</option>
               </select>
             </div>
+  
+            {errors.paymentMode && (
+              <p className="mt-2 text-sm text-red-400">
+                {errors.paymentMode.message}
+              </p>
+            )}
           </div>
-
+  
           {/* Amount */}
-
           <div>
-            <label className="mb-2 block text-slate-300 font-medium">
+            <label className="mb-2 block font-medium text-slate-300">
               Amount
             </label>
-
+  
             <div className="relative">
               <IndianRupee
                 size={20}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
               />
-
+  
               <input
                 type="number"
-                name="amount"
                 placeholder="Enter amount"
-                value={formData.amount}
-                onChange={handleChange}
-                required
-                className="w-full rounded-xl border border-slate-700 bg-slate-800 py-3 pl-12 pr-4 text-white placeholder:text-slate-500 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500"
+                {...register("amount", {
+                  required: "Amount is required",
+  
+                  valueAsNumber: true,
+  
+                  min: {
+                    value: 1,
+                    message: "Amount must be greater than ₹0",
+                  },
+                })}
+                className={`w-full rounded-xl border bg-slate-800 py-3 pl-12 pr-4 text-white placeholder:text-slate-500 outline-none transition focus:ring-2 ${
+                  errors.amount
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
+                    : "border-slate-700 focus:border-emerald-500 focus:ring-emerald-500/20"
+                }`}
               />
             </div>
+  
+            {errors.amount && (
+              <p className="mt-2 text-sm text-red-400">
+                {errors.amount.message}
+              </p>
+            )}
           </div>
-
-          {/* Button */}
-
+  
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full rounded-xl bg-emerald-500 py-4 text-lg font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/30 active:scale-95"
+            disabled={isSubmitting || mutation.isPending}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 py-4 text-lg font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/30 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Save Payment
+            {mutation.isPending ? (
+              <>
+                <Loader2
+                  size={20}
+                  className="animate-spin"
+                />
+  
+                Saving Payment...
+              </>
+            ) : (
+              "Save Payment"
+            )}
           </button>
+  
         </form>
-
-        <div className="text-blue-600  mt-4 text-4xl text-center h-14 ">
-          {mutation.isSuccess ? <h2>Payment Saved</h2> : null}
-        </div>
-      
-
       </div>
     </div>
   );
 }
+
+

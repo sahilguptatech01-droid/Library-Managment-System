@@ -42,7 +42,7 @@ export const submitFee = async (req: Request, res: Response) => {
     });
 
     if (fee) {
-      return res.json({
+      return res.status(409).json({
         message: "Payment already present for this month",
       });
     }

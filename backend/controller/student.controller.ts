@@ -26,7 +26,7 @@ export const createStudent=async(req:Request,res:Response)=>{
                 message:"Library not found"
             })
     } catch (error) {
-        return res.json({
+        return res.status(500).json({
             message:error
         })
         
@@ -99,6 +99,8 @@ export const updateStudentDetail=async (req:Request,res:Response) => {
             data:req.body,
             where:{
                 id:studentId as string
+            },omit:{
+                joiningDate:true
             }
             
         })
