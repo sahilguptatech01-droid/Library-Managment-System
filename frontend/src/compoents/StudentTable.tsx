@@ -14,7 +14,6 @@ const Box = () => {
   const { isLoading, isError, data } = useQuery({
     queryKey: ['getStudent '],
     staleTime:10*1000000,
-    retry:2,
    
       // 2. Stop refetching when user clicks back onto the browser tab
     // refetchOnWindowFocus: false, 
@@ -61,44 +60,105 @@ const Box = () => {
  
   return (
 
-<div className="space-y-5">
+<div className="space-y-3 sm:space-y-4">
   {data.students.map((x: any) => (
     <div
       key={x.id}
-      className="group flex flex-col gap-5 rounded-3xl border border-slate-700 bg-slate-900/80 p-6 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500 hover:shadow-indigo-500/20 md:flex-row md:items-center md:justify-between"
+      className="
+        group
+        flex flex-col gap-4
+        rounded-2xl
+        border border-zinc-800
+        bg-zinc-900/70
+        p-4
+        shadow-sm
+        transition-all duration-200
+        hover:border-zinc-700
+        hover:bg-zinc-900
+        sm:gap-5
+        sm:p-5
+        md:flex-row
+        md:items-center
+        md:justify-between
+      "
     >
       {/* Student Info */}
-      <div className="flex items-center gap-4">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full  from-indigo-500 to-purple-600 text-xl font-bold text-white">
+      <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+
+        {/* Avatar */}
+        <div
+          className="
+            flex h-12 w-12 shrink-0
+            items-center justify-center
+            rounded-full
+            border border-zinc-700
+            bg-zinc-800
+            text-lg font-semibold
+            text-white
+            sm:h-14 sm:w-14
+            sm:text-xl
+          "
+        >
           {x.name.charAt(0).toUpperCase()}
         </div>
 
-        <div>
-          <h2 className="text-xl font-semibold text-white">
+        {/* Details */}
+        <div className="min-w-0">
+          <h2 className="truncate text-base font-semibold text-white sm:text-lg">
             {x.name}
           </h2>
 
-          <p className="mt-1 text-sm text-white">
+          <p className="mt-1 truncate text-xs text-zinc-500 sm:text-sm">
             Phone No: {x.mobileNo}
           </p>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col gap-3 sm:flex-row md:w-auto w-full">
+      <div className="flex w-full flex-col gap-2 sm:flex-row md:w-auto">
 
+        {/* Pay Fee */}
         <button
           onClick={() => navigate(`/payment/${x.id}`)}
-          className="rounded-xl bg-emerald-500 px-5 py-3 font-medium text-white transition hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/30"
+          className="
+            w-full
+            rounded-xl
+            border border-emerald-500/30
+            bg-emerald-500/10
+            px-4 py-2.5
+            text-sm font-medium
+            text-emerald-400
+            transition-all duration-200
+            hover:border-emerald-500/50
+            hover:bg-emerald-500
+            hover:text-white
+            active:scale-[0.98]
+            sm:w-auto
+            sm:px-5
+          "
         >
           💳 Pay Fee
         </button>
 
-
-
+        {/* View Details */}
         <button
           onClick={() => navigate(`/details/${x.id}`)}
-          className="rounded-xl border border-indigo-500 bg-indigo-600/20 px-5 py-3 font-medium text-indigo-300 transition hover:bg-indigo-600 hover:text-white"
+          className="
+            w-full
+            rounded-xl
+            border border-zinc-700
+            bg-zinc-800
+            px-4 py-2.5
+            text-sm font-medium
+            text-zinc-300
+            transition-all duration-200
+            hover:border-zinc-600
+            hover:bg-white
+            hover:text-black
+            active:scale-[0.98]
+            sm:w-auto
+            sm:px-5
+          "
         >
           📄 View Details
         </button>

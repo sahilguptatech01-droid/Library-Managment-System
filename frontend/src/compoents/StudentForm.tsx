@@ -60,40 +60,30 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
 
 
   return (
-<div className="min-h-screen bg-zinc-950 px-4 py-8 sm:px-6 lg:px-8">
-  <div className="mx-auto w-full max-w-5xl rounded-3xl border border-zinc-800 bg-zinc-900 shadow-2xl">
+<div className="min-h-screen w-full bg-black px-3 py-4 text-white sm:px-6 sm:py-8">
+  <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 shadow-2xl sm:rounded-2xl">
 
-    {/* Header */}
-    <div className="flex flex-col gap-4 border-b border-zinc-800 p-6 sm:flex-row sm:items-center sm:justify-between">
-
-      <div>
-        <h1 className="text-2xl font-bold text-white">
+    {/* ================= HEADER ================= */}
+    <div className="w-full border-b border-zinc-800 px-4 py-4 sm:px-6 sm:py-5">
+      <div className="min-w-0">
+        <h1 className="text-lg font-semibold leading-6 tracking-tight text-white sm:text-2xl">
           {mode === "Edit" ? "Edit Student" : "Add Student"}
         </h1>
 
-        <p className="mt-1 text-sm text-zinc-400">
+        <p className="mt-1 text-xs leading-5 text-zinc-500 sm:text-sm">
           Fill in the student information below.
         </p>
       </div>
-
-      <button
-        type="button"
-        onClick={() => window.history.back()}
-        className="rounded-xl border border-zinc-700 bg-zinc-800 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-700"
-      >
-        ← Back
-      </button>
-
     </div>
 
-    {/* Form */}
+    {/* ================= FORM ================= */}
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-cols-1 gap-6 p-6 md:grid-cols-2"
+      className="grid w-full grid-cols-1 gap-5 p-4 sm:gap-6 sm:p-6 md:grid-cols-2"
     >
 
-      {/* Student Name */}
-      <div>
+      {/* ================= STUDENT NAME ================= */}
+      <div className="min-w-0">
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Student Name
         </label>
@@ -106,24 +96,28 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
               value: 3,
               message: "Name must be at least 3 characters",
             },
+             pattern: {
+            value: /^[A-Za-z\s]+$/, 
+            message: "Numbers and symbols are not allowed" 
+          }
           })}
           placeholder="Enter student name"
-          className={`w-full rounded-xl border bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:ring-2 ${
+          className={`w-full min-w-0 rounded-lg border bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none transition focus:ring-2 ${
             errors.name
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-              : "border-zinc-700 focus:border-blue-500 focus:ring-blue-500/20"
+              ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/10"
+              : "border-zinc-800 focus:border-zinc-500 focus:ring-zinc-500/10"
           }`}
         />
 
         {errors.name && (
-          <p className="mt-2 text-sm text-red-400">
+          <p className="mt-2 text-xs text-red-400 sm:text-sm">
             {errors.name.message}
           </p>
         )}
       </div>
 
-      {/* Father Name */}
-      <div>
+      {/* ================= FATHER NAME ================= */}
+      <div className="min-w-0">
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Father Name
         </label>
@@ -136,24 +130,28 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
               value: 3,
               message: "Father name must be at least 3 characters",
             },
+                 pattern: {
+            value: /^[A-Za-z\s]+$/, 
+            message: "Numbers and symbols are not allowed" // Your custom message
+          }
           })}
           placeholder="Enter father name"
-          className={`w-full rounded-xl border bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:ring-2 ${
+          className={`w-full min-w-0 rounded-lg border bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none transition focus:ring-2 ${
             errors.fatherName
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-              : "border-zinc-700 focus:border-blue-500 focus:ring-blue-500/20"
+              ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/10"
+              : "border-zinc-800 focus:border-zinc-500 focus:ring-zinc-500/10"
           }`}
         />
 
         {errors.fatherName && (
-          <p className="mt-2 text-sm text-red-400">
+          <p className="mt-2 text-xs text-red-400 sm:text-sm">
             {errors.fatherName.message}
           </p>
         )}
       </div>
 
-      {/* Mother Name */}
-      <div>
+      {/* ================= MOTHER NAME ================= */}
+      <div className="min-w-0">
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Mother Name
         </label>
@@ -165,31 +163,35 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
             minLength: {
               value: 3,
               message: "Mother name must be at least 3 characters",
-            },
+            },     pattern: {
+            value: /^[A-Za-z\s]+$/, 
+            message: "Numbers and symbols are not allowed" // Your custom message
+          }
           })}
           placeholder="Enter mother name"
-          className={`w-full rounded-xl border bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:ring-2 ${
+          className={`w-full min-w-0 rounded-lg border bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none transition focus:ring-2 ${
             errors.motherName
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-              : "border-zinc-700 focus:border-blue-500 focus:ring-blue-500/20"
+              ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/10"
+              : "border-zinc-800 focus:border-zinc-500 focus:ring-zinc-500/10"
           }`}
         />
 
         {errors.motherName && (
-          <p className="mt-2 text-sm text-red-400">
+          <p className="mt-2 text-xs text-red-400 sm:text-sm">
             {errors.motherName.message}
           </p>
         )}
       </div>
 
-      {/* Mobile */}
-      <div>
+      {/* ================= MOBILE ================= */}
+      <div className="min-w-0">
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Mobile Number
         </label>
 
         <input
           type="tel"
+          inputMode="numeric"
           {...register("mobileNo", {
             required: "Mobile number is required",
             pattern: {
@@ -198,22 +200,22 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
             },
           })}
           placeholder="9876543210"
-          className={`w-full rounded-xl border bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:ring-2 ${
+          className={`w-full min-w-0 rounded-lg border bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none transition focus:ring-2 ${
             errors.mobileNo
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-              : "border-zinc-700 focus:border-blue-500 focus:ring-blue-500/20"
+              ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/10"
+              : "border-zinc-800 focus:border-zinc-500 focus:ring-zinc-500/10"
           }`}
         />
 
         {errors.mobileNo && (
-          <p className="mt-2 text-sm text-red-400">
+          <p className="mt-2 text-xs text-red-400 sm:text-sm">
             {errors.mobileNo.message}
           </p>
         )}
       </div>
 
-      {/* Address */}
-      <div className="md:col-span-2">
+      {/* ================= ADDRESS ================= */}
+      <div className="min-w-0 md:col-span-2">
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Address
         </label>
@@ -230,24 +232,30 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
               value: 100,
               message: "Address cannot exceed 100 characters",
             },
+                    pattern: {
+            // Allows uppercase, lowercase, numbers 0-9, and spaces
+            value: /^[A-Za-z0-9\s]+$/, 
+            message: "Only letters, numbers, and spaces are allowed"
+          }
+
           })}
           placeholder="Enter full address"
-          className={`w-full rounded-xl border bg-zinc-800 px-4 py-3 text-white placeholder-zinc-500 outline-none transition focus:ring-2 ${
+          className={`min-h-28 w-full min-w-0 resize-y rounded-lg border bg-zinc-900 px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none transition focus:ring-2 ${
             errors.address
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-              : "border-zinc-700 focus:border-blue-500 focus:ring-blue-500/20"
+              ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/10"
+              : "border-zinc-800 focus:border-zinc-500 focus:ring-zinc-500/10"
           }`}
         />
 
         {errors.address && (
-          <p className="mt-2 text-sm text-red-400">
+          <p className="mt-2 text-xs text-red-400 sm:text-sm">
             {errors.address.message}
           </p>
         )}
       </div>
 
-      {/* Identity */}
-      <div>
+      {/* ================= IDENTITY ================= */}
+      <div className="min-w-0">
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Identity Proof
         </label>
@@ -256,26 +264,26 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
           {...register("identityProof", {
             required: "Identity proof is required",
           })}
-          className={`w-full rounded-xl border bg-zinc-800 px-4 py-3 text-white outline-none transition focus:ring-2 ${
+          className={`w-full min-w-0 rounded-lg border bg-zinc-900 px-4 py-3 text-sm text-white outline-none transition focus:ring-2 ${
             errors.identityProof
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-              : "border-zinc-700 focus:border-blue-500 focus:ring-blue-500/20"
+              ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/10"
+              : "border-zinc-800 focus:border-zinc-500 focus:ring-zinc-500/10"
           }`}
         >
-          <option value="ADHARCARD">Aadhar Card</option>
-          <option value="LICENSE">Driving License</option>
-          <option value="VOTERCARD">Voter Card</option>
+          <option value="ADHARCARD">AADHAR CARD</option>
+          <option value="LICENSE">DRIVING LICENSE</option>
+          <option value="VOTERCARD">VOTER CARD</option>
         </select>
 
         {errors.identityProof && (
-          <p className="mt-2 text-sm text-red-400">
+          <p className="mt-2 text-xs text-red-400 sm:text-sm">
             {errors.identityProof.message}
           </p>
         )}
       </div>
 
-      {/* Status */}
-      <div>
+      {/* ================= STATUS ================= */}
+      <div className="min-w-0">
         <label className="mb-2 block text-sm font-medium text-zinc-300">
           Status
         </label>
@@ -284,41 +292,72 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
           {...register("status", {
             required: "Status is required",
           })}
-          className={`w-full rounded-xl border bg-zinc-800 px-4 py-3 text-white outline-none transition focus:ring-2 ${
+          className={`w-full min-w-0 rounded-lg border bg-zinc-900 px-4 py-3 text-sm text-white outline-none transition focus:ring-2 ${
             errors.status
-              ? "border-red-500 focus:border-red-500 focus:ring-red-500/20"
-              : "border-zinc-700 focus:border-blue-500 focus:ring-blue-500/20"
+              ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/10"
+              : "border-zinc-800 focus:border-zinc-500 focus:ring-zinc-500/10"
           }`}
         >
           <option value="ACTIVE">ACTIVE</option>
-          <option value="INACTIVE">INACTIVE</option>
+          <option value="LEAVE">INACTIVE</option>
         </select>
 
         {errors.status && (
-          <p className="mt-2 text-sm text-red-400">
+          <p className="mt-2 text-xs text-red-400 sm:text-sm">
             {errors.status.message}
           </p>
         )}
       </div>
 
-      {/* Buttons */}
-      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-end md:col-span-2">
+      {/* ================= BUTTONS ================= */}
+      <div className="flex flex-col gap-3 border-t border-zinc-800 pt-5 md:col-span-2 sm:flex-row sm:justify-end">
 
+        {/* Cancel */}
         <button
           type="button"
           onClick={() => window.history.back()}
-          className="rounded-xl border border-zinc-700 bg-zinc-800 px-6 py-3 text-white transition hover:bg-zinc-700"
+          className="
+            order-2
+            w-full
+            rounded-lg
+            border border-zinc-800
+            bg-zinc-900
+            px-6 py-3
+            text-sm font-medium
+            text-zinc-300
+            transition
+            hover:bg-zinc-800
+            hover:text-white
+            active:scale-[0.98]
+            sm:order-1
+            sm:w-auto
+          "
         >
           Cancel
         </button>
 
+        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
-          className="rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-8 py-3 font-semibold text-white transition hover:from-blue-500 hover:to-indigo-500 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          className="
+            order-1
+            w-full
+            rounded-lg
+            bg-white
+            px-6 py-3
+            text-sm font-semibold
+            text-black
+            transition
+            hover:bg-zinc-200
+            active:scale-[0.98]
+            disabled:cursor-not-allowed
+            disabled:opacity-50
+            sm:order-2
+            sm:w-auto
+          "
         >
           {loading ? "Saving..." : text}
-          
         </button>
 
       </div>

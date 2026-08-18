@@ -34,52 +34,96 @@ export default function QuickActions() {
   ];
 
   return (
-    <section className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 shadow-xl backdrop-blur-xl">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-white">
-          Quick Actions
-        </h2>
+<section className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6">
 
-        <p className="mt-2 text-slate-400">
-          Frequently used shortcuts for managing your library.
-        </p>
-      </div>
+  {/* Header */}
+  <div className="mb-6 sm:mb-8">
+    <h2 className="text-xl font-semibold text-white sm:text-2xl">
+      Quick Actions
+    </h2>
 
-      <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-        {actions.map((action) => {
-          const Icon = action.icon;
+    <p className="mt-2 max-w-2xl text-sm text-zinc-500 sm:text-base">
+      Frequently used shortcuts for managing your library.
+    </p>
+  </div>
 
-          return (
-            <button
-              key={action.title}
-              onClick={() => navigate(action.route)}
-              className="group rounded-2xl border border-slate-800 bg-slate-950 p-6 text-left transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500 hover:shadow-xl hover:shadow-cyan-500/10"
-            >
-              <div
-                className={`mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-r ${action.color}`}
-              >
-                <Icon className="text-white" size={28} />
-              </div>
+  {/* Actions */}
+  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
 
-              <h3 className="text-lg font-semibold text-white">
-                {action.title}
-              </h3>
+    {actions.map((action) => {
+      const Icon = action.icon;
 
-              <p className="mt-2 text-sm text-slate-400">
-                {action.description}
-              </p>
+      return (
+        <button
+          key={action.title}
+          onClick={() => navigate(action.route)}
+          className="
+            group
+            rounded-xl
+            border border-zinc-800
+            bg-zinc-900/50
+            p-4
+            text-left
+            transition-colors duration-200
+            hover:border-zinc-600
+            hover:bg-zinc-900
+            sm:p-5
+          "
+        >
 
-              <div className="mt-6 flex items-center gap-2 text-cyan-400 transition group-hover:translate-x-1">
-                <span className="text-sm font-medium">
-                  Open
-                </span>
+          {/* Icon */}
+          <div
+            className="
+              mb-4
+              flex h-11 w-11
+              items-center justify-center
+              rounded-xl
+              border border-zinc-700
+              bg-zinc-800
+              sm:h-12 sm:w-12
+            "
+          >
+            <Icon
+              size={22}
+              className="text-zinc-200"
+            />
+          </div>
 
-                <ArrowRight size={16} />
-              </div>
-            </button>
-          );
-        })}
-      </div>
-    </section>
+          {/* Title */}
+          <h3 className="text-base font-semibold text-white sm:text-lg">
+            {action.title}
+          </h3>
+
+          {/* Description */}
+          <p className="mt-2 text-sm leading-6 text-zinc-500">
+            {action.description}
+          </p>
+
+          {/* Open */}
+          <div
+            className="
+              mt-5
+              flex items-center gap-2
+              text-sm font-medium
+              text-zinc-300
+              transition-transform duration-200
+              group-hover:translate-x-1
+            "
+          >
+            <span>Open</span>
+
+            <ArrowRight
+              size={16}
+              className="text-zinc-500"
+            />
+          </div>
+
+        </button>
+      );
+    })}
+
+  </div>
+
+</section>
   );
 }

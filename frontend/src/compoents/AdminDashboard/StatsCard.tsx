@@ -8,28 +8,59 @@ const StatsCard = ({
   title,value
 }:Stats) => {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 p-6 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/50 hover:shadow-indigo-500/10">
+<div
+  className="
+    relative overflow-hidden
+    rounded-2xl
+    border border-zinc-800
+    bg-zinc-900
+    p-4
+    transition-all duration-200
+    hover:border-zinc-700
+    hover:bg-zinc-900/90
+    sm:p-5
+    lg:p-6
+  "
+>
+  {/* Subtle background detail */}
+  <div className="
+    pointer-events-none
+    absolute -right-12 -top-12
+    h-24 w-24
+    rounded-full
+    bg-white/2
+    blur-2xl
+  " />
 
-      {/* Background Glow */}
-      <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-indigo-500/10 blur-3xl"></div>
+  {/* Title */}
+  <div className="relative flex items-center justify-between">
+    <p className="
+      text-xs
+      font-medium
+      uppercase
+      tracking-wide
+      text-zinc-500
+      sm:text-sm
+    ">
+      {title}
+    </p>
+  </div>
 
-      {/* Title */}
-      <div className="flex items-center justify-between">
-        <p className="text-sm font-medium uppercase tracking-wider text-zinc-400">
-          {title}
-        </p>
-
-       
-      </div>
-
-      {/* Number */}
-      <h2 className="mt-5 text-5xl font-bold tracking-tight text-white">
-        {value}
-      </h2>
-
-    
-
-    </div>
+  {/* Number */}
+  <h2 className="
+    relative
+    mt-3
+    text-3xl
+    font-semibold
+    tracking-tight
+    text-white
+    sm:mt-4
+    sm:text-4xl
+    lg:text-5xl
+  ">
+    {value}
+  </h2>
+</div>
   );
 };
 

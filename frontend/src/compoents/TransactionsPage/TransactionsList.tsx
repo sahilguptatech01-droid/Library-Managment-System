@@ -52,10 +52,13 @@ export default function TransactionList({ transactions, isLoading, isError }:Tra
 
 
   return (
-    <div className="space-y-4">
-      {transactions.map((transaction) => (
-        <TransactionCard key={transaction.id} transaction={transaction} />
-      ))}
-    </div>
+<div className="space-y-3 sm:space-y-4">
+  {transactions.map((transaction) => (
+    <TransactionCard
+      key={transaction.id}
+      transaction={transaction}
+    />
+  ))}
+</div>
   );
 }

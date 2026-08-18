@@ -1,24 +1,25 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Routes,Route } from 'react-router-dom'
-import Home from './pages/Home'
 import Create from './pages/CreateLibrary'
 import Card from './compoents/Card'
 import AdminDahboard from './pages/AdminDahboard'
 import CreateStudent from './pages/CreateStudent'
 import EditStudent from './pages/EditStudent'
 import ProtectedRoute from './routes/ProtectedRoute'
-import SignUpPage from './pages/SignUpPage'
 import Payment from './pages/Payment'
 import TransactionHistory from './pages/TransactionHistory'
 import StudentsPage from './pages/StudentsPage'
 import TransactionsPage from './pages/TransactionsPage'
+import SignInPage from './pages/SignInPage'
+import OfflineScreen from './compoents/OfflineScreen'
+import SignUpPage from './pages/SignUpPage'
 
 
 
 
-
-
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({defaultOptions:{
+  queries:{retry:3}
+}})
 
 
 // To use tanstack dev tools
@@ -35,14 +36,23 @@ window.__TANSTACK_QUERY_CLIENT__ = queryClient
 // 
 
 export default function App() {
+  
+
+  if(!navigator.onLine){
+    return <OfflineScreen/>
+  }
+
+
   return (
 
 <QueryClientProvider client={queryClient}>
     <BrowserRouter>
      <Routes>
-        <Route path="/" element={<Home/>}/> 
-        <Route path="/sign-up" element={<SignUpPage/>}/> 
+        {/* <Route path="/home" element={<Home/>}/>  */}
         <Route path="/create" element={<Create/>}/>
+        <Route path="/sign-in" element={<SignInPage/>}/> 
+        <Route path="/" element={<SignUpPage/>}/> 
+
         
 
         {/* Protected Route */}

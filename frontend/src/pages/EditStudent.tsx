@@ -99,45 +99,47 @@ const EditStudent = () => {
     
   }
   return (
-  <div className="min-h-screen bg-zinc-950 px-4 py-10">
-  <div className="mx-auto max-w-5xl">
+<div className="min-h-screen w-full bg-zinc-950 px-4 py-6 text-white sm:px-6 sm:py-8 lg:px-8 lg:py-10">
 
-    {/* Header */}
-    <div className="mb-8">
-      <h1 className="text-3xl font-bold text-white">
+  <div className="mx-auto w-full max-w-5xl">
+
+    {/* Page Header */}
+    <div className="mb-6 sm:mb-8">
+      <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
         ✏️ Edit Student Profile
       </h1>
 
-      <p className="mt-2 text-zinc-400">
+      <p className="mt-2 text-sm leading-6 text-zinc-400 sm:text-base">
         Update the student's information and save your changes.
       </p>
     </div>
 
+
     {/* Success Message */}
     {mutation.isSuccess && (
-      <div className="mb-6 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3">
-        <p className="font-medium text-emerald-400">
+      <div className="mb-5 w-full rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3">
+        <p className="text-sm font-medium text-emerald-400 sm:text-base">
           ✅ Updated Successfully
         </p>
       </div>
     )}
 
-    {/* Failed Message */}
 
-
-       {mutation.isError && (
-      <div className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3">
-        <p className="font-medium text-red-400">
+    {/* Error Message */}
+    {mutation.isError && (
+      <div className="mb-5 w-full rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3">
+        <p className="text-sm font-medium text-red-400 sm:text-base">
           ❌ Try after sometime
         </p>
       </div>
     )}
 
-    {/* Form Card */}
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">
+
+    {/* Form */}
+    <div className="w-full">
 
       <StudentForm
-        loading={loading  }
+        loading={loading}
         mode="Edit"
         text="Save Changes"
         submit={handleSubmit}

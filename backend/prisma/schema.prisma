@@ -11,6 +11,7 @@ model Library {
   id          String    @id   @default(uuid())
   name        String
   ownerName   String
+  email       String    @unique 
   phoneNo     String    @unique
   address     String
   createdAt   DateTime  @default(now())

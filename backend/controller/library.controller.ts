@@ -3,7 +3,9 @@ import {prisma} from "../prisma"
 import { clerkClient } from "@clerk/express";
 
 export const createLibrary=async(req:Request,res:Response)=>{
+    const email=res.locals.email
     const userId=res.locals.userId
+
     try {
         const library =await prisma.library.create({
             data:{
@@ -11,7 +13,8 @@ export const createLibrary=async(req:Request,res:Response)=>{
                 ownerName:req.body.ownerName,
                 phoneNo:req.body.phoneNo,
                 address:req.body.address,
-                clerkUserId:userId
+                clerkUserId:userId,
+                email:email
             }
         })
 
@@ -83,7 +86,7 @@ export const deleteLibrary=async(req:Request,res:Response)=>{
         }
     })
     if (library){
-        const deleteLib=await prisma.library.delete({
+        const  deleteLib=await prisma.library.delete({
             where:{
                 // clerkUserId
                 id:libraryId as string
@@ -95,6 +98,7 @@ export const deleteLibrary=async(req:Request,res:Response)=>{
     }
      return res.json({
             message:"Not Found"
+
         })
     
 

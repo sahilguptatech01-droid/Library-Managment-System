@@ -63,60 +63,56 @@ const CreateStudent = () => {
   }
 
   return (
-<div className="min-h-screen bg-zinc-950 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+<div className="min-h-screen w-full overflow-x-hidden bg-zinc-950 px-4 py-6 text-white sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+
   <div className="mx-auto w-full max-w-5xl">
 
     {/* Page Header */}
     <div className="mb-6 sm:mb-8">
-      <h1 className="text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+      <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
         🎓 Student Registration
       </h1>
 
-      <p className="mt-2 text-sm text-zinc-400 sm:text-base">
+      <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
         Add a new student by filling in the details below.
       </p>
     </div>
 
+
     {/* Success Message */}
-     
-    {mutation.isSuccess &&<div className="mb-6 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 sm:p-5">
+    {mutation.isSuccess && (
+      <div className="mb-5 w-full rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 sm:mb-6 sm:px-5 sm:py-4">
         <div className="flex items-start gap-3">
-          <span className="text-xl">✅</span>
+          <span className="shrink-0 text-lg">
+            ✅
+          </span>
 
-          <div>
-           <h3 className="text-sm font-semibold text-emerald-400 sm:text-base">
-              Student Registered Successfully
-            </h3>
-
-          
-          </div>
-        </div>
-      </div>}
-
-{/* Failed Meessage */}
-
-{mutation.isError &&
-        <div className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 p-4 sm:p-5">
-        <div className="flex items-start gap-3">
-          <span className="text-xl">❌</span>
-
-          <div>
-           <h3 className="text-sm font-semibold text-red-400 sm:text-base">
-            Failed to create student
-            </h3>
-
-        
-          </div>
+          <p className="min-w-0 text-sm font-medium leading-6 text-emerald-400 sm:text-base">
+            Student Registered Successfully
+          </p>
         </div>
       </div>
+    )}
 
-}
+
+    {/* Error Message */}
+    {mutation.isError && (
+      <div className="mb-5 w-full rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 sm:mb-6 sm:px-5 sm:py-4">
+        <div className="flex items-start gap-3">
+          <span className="shrink-0 text-lg">
+            ❌
+          </span>
+
+          <p className="min-w-0 text-sm font-medium leading-6 text-red-400 sm:text-base">
+            Failed to create student
+          </p>
+        </div>
+      </div>
+    )}
 
 
-    
-
-    {/* Form Card */}
-    <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4 shadow-2xl sm:p-6 lg:p-8">
+    {/* Form */}
+    <div className="w-full min-w-0">
 
       <StudentForm
         loading={loading}

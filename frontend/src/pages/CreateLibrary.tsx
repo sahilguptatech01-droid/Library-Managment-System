@@ -140,6 +140,10 @@ return(
               value: 3,
               message: "Library name must be at least 3 characters",
             },
+                 pattern: {
+            value: /^[A-Za-z\s]+$/, 
+            message: "Numbers and symbols are not allowed" // Your custom message
+          }
           })}
           placeholder="Enter library name"
           className={`w-full rounded-xl border bg-gray-900 px-4 py-3 text-white placeholder-gray-500 outline-none transition focus:ring-2 ${
@@ -170,6 +174,10 @@ return(
               value: 3,
               message: "Owner name must be at least 3 characters",
             },
+                 pattern: {
+            value: /^[A-Za-z\s]+$/, 
+            message: "Numbers and symbols are not allowed" // Your custom message
+          }
           })}
           placeholder="Enter owner name"
           className={`w-full rounded-xl border bg-gray-900 px-4 py-3 text-white placeholder-gray-500 outline-none transition focus:ring-2 ${
@@ -230,6 +238,12 @@ return(
               value: 10,
               message: "Address must be at least 10 characters",
             },
+             pattern: {
+            // Allows uppercase, lowercase, numbers 0-9, and spaces
+            value: /^[A-Za-z0-9\s]+$/, 
+            message: "Only letters, numbers, and spaces are allowed"
+          }
+
           })}
           placeholder="Enter address"
           className={`w-full resize-none rounded-xl border bg-gray-900 px-4 py-3 text-white placeholder-gray-500 outline-none transition focus:ring-2 ${

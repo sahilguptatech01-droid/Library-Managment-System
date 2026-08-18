@@ -6,20 +6,27 @@ import StudentsSearch from "../compoents/students/StudentsSearch";
 
 export default function StudentsPage() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-black">
+<div className="min-h-screen w-full overflow-x-hidden bg-zinc-950 text-white">
 
-      <StudentsHeader />
+  <StudentsHeader />
 
-      <div className="mx-auto max-w-7xl p-6 space-y-6">
+  <main className="mx-auto w-full max-w-7xl px-3 py-5 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
 
-        <StudentsSearch />
+    <div className="space-y-4 sm:space-y-6">
 
-        <StudentsFilters />
+      {/* Search */}
+      <StudentsSearch />
 
-        <Box/>
+      {/* Filters */}
+      <StudentsFilters />
 
-      </div>
+      {/* Students */}
+      <Box />
 
     </div>
+
+  </main>
+
+</div>
   );
 }

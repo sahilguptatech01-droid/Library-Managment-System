@@ -11,7 +11,6 @@ import axios from "axios";
 export default function TransactionsPage() {
   const {isLoading,isError,data}=useQuery({
     queryKey:['transaction'],
-    retry:2,
     queryFn:async()=>{
       const token=await getToken()
       const res=await axios.get(`${API_URL}/fees/all/transaction`,{

@@ -5,28 +5,45 @@ export default function StudentsHeader() {
   const navigate = useNavigate();
 
   return (
-    <div className="border-b border-slate-800 bg-slate-900/60 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl flex-col gap-5 p-6 md:flex-row md:items-center md:justify-between">
+<div className="border-b border-zinc-800 bg-zinc-950">
+  <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-3 py-5 sm:px-6 sm:py-6 md:flex-row md:items-center md:justify-between lg:px-8">
 
-        <div>
-          <h1 className="text-3xl font-bold text-white">
-            Students
-          </h1>
+    {/* Title */}
+    <div className="min-w-0">
+      <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        Students
+      </h1>
 
-          <p className="mt-1 text-slate-400">
-            Manage all registered students.
-          </p>
-        </div>
-
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800 px-5 py-3 text-white transition hover:border-cyan-500 hover:text-cyan-400"
-        >
-          <ArrowLeft size={18} />
-          Back
-        </button>
-
-      </div>
+      <p className="mt-1 text-sm leading-6 text-zinc-400 sm:text-base">
+        Manage all registered students.
+      </p>
     </div>
+
+    {/* Back Button */}
+    <button
+      onClick={() => navigate(-1)}
+      className="
+        flex w-full items-center justify-center gap-2
+        rounded-xl
+        border border-zinc-800
+        bg-zinc-900
+        px-4 py-3
+        text-sm font-medium
+        text-zinc-300
+        transition-all duration-200
+        hover:border-zinc-600
+        hover:bg-zinc-800
+        hover:text-white
+        active:scale-[0.98]
+        sm:w-auto
+        sm:px-5
+      "
+    >
+      <ArrowLeft size={18} />
+      Back
+    </button>
+
+  </div>
+</div>
   );
 }

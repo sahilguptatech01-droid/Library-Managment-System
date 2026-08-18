@@ -11,7 +11,8 @@ export const getStats=async(req:Request,res:Response)=>{
         // No of students
         const student=await prisma.student.count({
           where:{
-            libraryId:libraryId
+            libraryId:libraryId,
+            status:"ACTIVE",
           }
         })
           const now = new Date();
@@ -24,6 +25,7 @@ export const getStats=async(req:Request,res:Response)=>{
     const aggregation = await prisma.studentPayment.aggregate({
       where: {
         libraryId:libraryId,
+        student:{status:"ACTIVE"},
         createdAt: {
           gte: startOfMonth,
           lte: endOfMonth
@@ -36,11 +38,15 @@ export const getStats=async(req:Request,res:Response)=>{
 
     const recentStudents=await prisma.student.findMany({
       where:{
-        libraryId:libraryId
+        libraryId:libraryId,
+        status:"ACTIVE"
       },  take: 5, // Limits the output to 5 records
       orderBy: {
     createdAt: 'desc', // Sorts by latest first ('desc' = descending)
   },select:{
+    library:{select:{
+      name:true
+    }},
     name:true,
     id:true,
     mobileNo:true
@@ -50,7 +56,8 @@ export const getStats=async(req:Request,res:Response)=>{
     const recentTransaction=await prisma.studentPayment.findMany({
       take:5,
       where:{
-        libraryId:libraryId
+        libraryId:libraryId,
+        student:{status:"ACTIVE"},
       },
       orderBy:{
         createdAt:'desc'
