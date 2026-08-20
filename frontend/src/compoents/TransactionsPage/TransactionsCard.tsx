@@ -69,7 +69,7 @@ export default function TransactionCard({ transaction }:TransactionCardProps) {
               size={15}
               className="text-zinc-400"
             />
-            {transaction.createdAt.split("T")[0]}
+            {transaction.paymentDate.split("T")[0]}
           </span>
 
         </div>

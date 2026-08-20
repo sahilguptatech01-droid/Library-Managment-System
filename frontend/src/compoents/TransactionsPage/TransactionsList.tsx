@@ -9,7 +9,7 @@ export  interface Transaction{
   name:string,
   amount:string,
   month:string,
-  createdAt:string,
+  paymentDate:string,
   student:{name:string},
 }
 

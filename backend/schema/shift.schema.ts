@@ -1,8 +1,7 @@
 import{ z} from "zod"
 
 export const createShiftSchema=z.object({
-    shifts:z.string(),
-    libraryId:z.string()
+    shifts:z.string()
 
 })
 

@@ -112,13 +112,13 @@ export const getTransaction = async (req: Request, res: Response) => {
         libraryId:res.locals.libraryId,
         studentId: studentId,
       },
+      
       omit: {
         createdAt: true,
-        // studentId:true,
         id: true,
       },
       orderBy:{
-        createdAt:'desc'
+        paymentDate:'desc'
       }
     });
 
@@ -142,11 +142,14 @@ export const allTransaction=async (req:Request,res:Response)=>{
       },select:{
         amount:true,
         month:true,
+        paymentDate:true,
         student:{select:{
           name:true
         }},
         createdAt:true,
         id:true
+      },orderBy:{
+        paymentDate:"desc"
       }
     })
     return res.json({

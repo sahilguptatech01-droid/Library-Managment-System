@@ -40,7 +40,7 @@ export const getStats=async(req:Request,res:Response)=>{
       where:{
         libraryId:libraryId,
         status:"ACTIVE"
-      },  take: 5, // Limits the output to 5 records
+      },  take:35, // Limits the output to 5 records
       orderBy: {
     createdAt: 'desc', // Sorts by latest first ('desc' = descending)
   },select:{
@@ -54,7 +54,7 @@ export const getStats=async(req:Request,res:Response)=>{
     })
 
     const recentTransaction=await prisma.studentPayment.findMany({
-      take:5,
+      take:3,
       where:{
         libraryId:libraryId,
         student:{status:"ACTIVE"},

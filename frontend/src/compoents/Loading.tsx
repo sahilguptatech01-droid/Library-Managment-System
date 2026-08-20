@@ -1,6 +1,10 @@
 const Loading = ({className="fixed inset-0 z-9999"}) => {
   return (
-<div className= {`${className} flex min-h-screen items-center justify-center bg-black`} >
+<div className= {`  flex
+        items-center
+        justify-center
+        bg-black
+        ${className}`} >
   <div className="relative h-10 w-10">
 
     {/* Outer ring */}

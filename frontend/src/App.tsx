@@ -13,6 +13,7 @@ import TransactionsPage from './pages/TransactionsPage'
 import SignInPage from './pages/SignInPage'
 import OfflineScreen from './compoents/OfflineScreen'
 import SignUpPage from './pages/SignUpPage'
+import CreateShift from './pages/CreateShift'
 
 
 
@@ -49,6 +50,7 @@ export default function App() {
     <BrowserRouter>
      <Routes>
         {/* <Route path="/home" element={<Home/>}/>  */}
+
         <Route path="/create" element={<Create/>}/>
         <Route path="/sign-in" element={<SignInPage/>}/> 
         <Route path="/" element={<SignUpPage/>}/> 
@@ -57,6 +59,7 @@ export default function App() {
 
         {/* Protected Route */}
         <Route element={<ProtectedRoute/>}>        
+        <Route path="/create/shift" element={<CreateShift/>}/>
         <Route path="/students" element={<StudentsPage/>}/>
         <Route path="/transactions" element={<TransactionsPage/>}/>
         <Route path="/payment/:id" element={<Payment/>}/>

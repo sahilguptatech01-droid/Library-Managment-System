@@ -2,6 +2,7 @@ import {
   UserPlus,
   CreditCard,
     ArrowRight,
+    Clock10Icon,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -23,13 +24,13 @@ export default function QuickActions() {
       color: "from-emerald-500 to-green-500",
       route: "/students",
     },
-    // {
-    //   title: "Manage Students",
-    //   description: "View and edit students",
-    //   icon: BookOpen,
-    //   color: "from-violet-500 to-fuchsia-500",
-    //   route: "/students",
-    // },
+    {
+      title: "Manage Shifts",
+      description: "View and edit students",
+      icon: Clock10Icon,
+      color: "from-violet-500 to-fuchsia-500",
+      route: "/create/shift",
+    },
  
   ];
 
