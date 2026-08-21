@@ -1,4 +1,3 @@
-import { Bell } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import RecentStudents from "../compoents/AdminDashboard/RecentStudent";
 import { useQuery } from "@tanstack/react-query";
@@ -69,7 +68,7 @@ const AdminDashboard = () => {
       Admin Dashboard
     </h1>
 
-    <p
+    {/* <p
       className="
         mt-0.5
         truncate
@@ -78,14 +77,14 @@ const AdminDashboard = () => {
       "
     >
       {data?.recentStudents?.[0]?.library?.name || "Library"}
-    </p>
+    </p> */}
   </div>
 
   {/* Right Actions */}
   <div className="flex shrink-0 items-center gap-2 sm:gap-3">
 
     {/* Notification */}
-    <button
+    {/* <button
       className="
         relative
         flex h-10 w-10
@@ -111,7 +110,7 @@ const AdminDashboard = () => {
           bg-white
         "
       />
-    </button>
+    </button> */}
 
     {/* Clerk User */}
     <div

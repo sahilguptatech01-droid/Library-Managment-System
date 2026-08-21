@@ -1,8 +1,10 @@
 import { Response, Request } from "express";
 import { prisma } from "../prisma";
+import { date } from "zod";
 
 export const submitFee = async (req: Request, res: Response) => {
   const libraryId = res.locals.libraryId;
+  const { amount,studentId,month} = req.body;
 
   const targetDate = new Date(req.body.paymentDate); // Converting to datetime
   const startOfMonth = new Date(
@@ -34,10 +36,7 @@ export const submitFee = async (req: Request, res: Response) => {
     const fee = await prisma.studentPayment.findFirst({
       where: {
         studentId: req.body.studentId,
-        paymentDate: {
-          gte: startOfMonth, // Greater than or equal to start of month
-          lte: endOfMonth, // Less than or equal to end of month
-        },
+       month:req.body.month
       },
     });
 
@@ -49,10 +48,16 @@ export const submitFee = async (req: Request, res: Response) => {
 
     const submit = await prisma.studentPayment.create({
       data: {
-        ...req.body,
+        amount,
+        month,
+        studentId,
+        paymentDate:new Date(),
         libraryId: libraryId,
+        year:new Date().getFullYear(),
+
       },
     });
+    
     
     return res.json({
       data: {
@@ -61,13 +66,10 @@ export const submitFee = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
-    return res.json({
-      data: {
-        error,
-        message: "Try after sometime",
-        status: "Failed",
-      },
-    });
+      return res.status(500).json({
+    status: "Failed",
+    message: error instanceof Error ? error.message : String(error),
+  });
   }
 };
 
@@ -113,10 +115,16 @@ export const getTransaction = async (req: Request, res: Response) => {
         studentId: studentId,
       },
       
-      omit: {
-        createdAt: true,
-        id: true,
-      },
+    select:{
+      amount:true,
+      month:true,
+      paymentDate:true,
+      paymentMode:true,
+      student:{select:{
+        name:true
+      }}
+
+    },
       orderBy:{
         paymentDate:'desc'
       }
@@ -146,7 +154,6 @@ export const allTransaction=async (req:Request,res:Response)=>{
         student:{select:{
           name:true
         }},
-        createdAt:true,
         id:true
       },orderBy:{
         paymentDate:"desc"

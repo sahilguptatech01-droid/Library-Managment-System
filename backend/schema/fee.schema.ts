@@ -19,8 +19,8 @@ const month=[
 export const feeSchema=z.object({
     amount:z.number().positive(),
     studentId:z.string(),
-    paymentDate:z.string(),
-    month:z.enum(month)
+    month:z.number()
+    
     
 
 })

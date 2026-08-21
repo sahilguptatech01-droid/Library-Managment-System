@@ -1,6 +1,15 @@
 import { useEffect } from "react"
 import { useForm, type SubmitHandler,} from "react-hook-form"
+import { useQuery } from "@tanstack/react-query"
+import { API_URL } from "../config"
+import axios from "axios"
+import { getToken } from "@clerk/react"
+import { type Shift } from "./ShiftDetails"
 
+
+type ShiftResponse = {
+  data: Shift[];
+};
 
 export type StudentFormProp={
   name:string,
@@ -10,6 +19,7 @@ export type StudentFormProp={
   mobileNo:string,
   status:string,
   joiningDate:Date,
+  shiftId:number,
   identityProof:string
 }
 
@@ -26,6 +36,18 @@ type StudentProps={
 
 const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
  const {register,handleSubmit,reset,formState:{errors}}=useForm<StudentFormProp>() 
+ const {data:shiftData,isPending}=useQuery<ShiftResponse>({
+  queryKey:["getShifts"],
+  queryFn:async(): Promise<ShiftResponse>=>{
+    const token=await getToken()
+    const response=await axios.get(`${API_URL}/shifts/`,{headers:{
+            Authorization: `Bearer ${token}`,
+    }})
+    return response.data
+
+  }
+  
+ })
 
   useEffect(() => {
     if (mode === "Edit" && intialData) {
@@ -36,6 +58,7 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
         identityProof: intialData.identityProof,
         status:intialData.status,
         mobileNo:intialData.mobileNo,
+        shiftId: intialData.shiftId,
         address:intialData.address
       });
     }
@@ -44,6 +67,7 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
  const onSubmit:SubmitHandler<StudentFormProp>=(data)=>{
    if(mode==="Create"){
      const formData={...data,joiningDate:new Date()}
+     
      submit(formData)
     }
     
@@ -254,6 +278,51 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
         )}
       </div>
 
+        {/* ================= SHIFT ================= */}
+        <div className="min-w-0 md:col-span-2">
+          <label
+            htmlFor="shiftId"
+            className="mb-2 block text-sm font-medium text-zinc-300"
+          >
+            Shift
+          </label>
+
+          {isPending ? (
+            <div className="flex h-11 items-center rounded-lg border border-zinc-800 bg-zinc-900 px-4 text-sm text-zinc-500">
+              Loading shifts...
+            </div>
+          ) : (
+            <select
+              id="shiftId"
+              {...register("shiftId", {
+                required: "Shift is required",
+              })}
+              className={`w-full rounded-lg border bg-zinc-900 px-4 py-3 text-sm text-white outline-none transition
+                ${
+                  errors.shiftId
+                    ? "border-red-500/70 focus:border-red-500 focus:ring-2 focus:ring-red-500/10"
+                    : "border-zinc-800 focus:border-zinc-600 focus:ring-2 focus:ring-zinc-600/10"
+                }
+              `}
+            >
+              <option value="">Select Shift</option>
+
+              {shiftData?.data?.map((shift) => (
+                <option key={shift.id} value={shift.id}>
+                  {shift.shifts}
+                </option>
+              ))}
+            </select>
+          )}
+
+          {errors.shiftId && (
+            <p className="mt-2 text-xs text-red-400 sm:text-sm">
+              {errors.shiftId.message}
+            </p>
+          )}
+        </div>
+      
+
       {/* ================= IDENTITY ================= */}
       <div className="min-w-0">
         <label className="mb-2 block text-sm font-medium text-zinc-300">
@@ -308,6 +377,7 @@ const StudentForm = ({intialData,mode,submit,text,loading}:StudentProps) => {
           </p>
         )}
       </div>
+
 
       {/* ================= BUTTONS ================= */}
       <div className="flex flex-col gap-3 border-t border-zinc-800 pt-5 md:col-span-2 sm:flex-row sm:justify-end">

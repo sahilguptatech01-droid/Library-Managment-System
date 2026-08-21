@@ -4,6 +4,8 @@ import { prisma } from "../prisma"
 
 export const getStats=async(req:Request,res:Response)=>{
   const libraryId=res.locals.libraryId
+  
+  
  
   
     // Revenue for that month
@@ -21,12 +23,12 @@ export const getStats=async(req:Request,res:Response)=>{
     const startOfMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1, 0, 0, 0, 0));
     const endOfMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 0, 23, 59, 59, 999));
 
-    // 2. Use Prisma's aggregate feature to sum up the amounts
+    // // 2. Use Prisma's aggregate feature to sum up the amounts
     const aggregation = await prisma.studentPayment.aggregate({
       where: {
         libraryId:libraryId,
         student:{status:"ACTIVE"},
-        createdAt: {
+        paymentDate: {
           gte: startOfMonth,
           lte: endOfMonth
         }
@@ -40,13 +42,11 @@ export const getStats=async(req:Request,res:Response)=>{
       where:{
         libraryId:libraryId,
         status:"ACTIVE"
-      },  take:35, // Limits the output to 5 records
+      }, 
+       take:3, // Limits the output to 5 records
       orderBy: {
     createdAt: 'desc', // Sorts by latest first ('desc' = descending)
   },select:{
-    library:{select:{
-      name:true
-    }},
     name:true,
     id:true,
     mobileNo:true
@@ -60,7 +60,7 @@ export const getStats=async(req:Request,res:Response)=>{
         student:{status:"ACTIVE"},
       },
       orderBy:{
-        createdAt:'desc'
+        paymentDate:'desc'
       },select:{
         student:{
           select:{
@@ -68,10 +68,15 @@ export const getStats=async(req:Request,res:Response)=>{
           }
         },
         paymentMode:true,
+        paymentDate:true,
         month:true,
         amount:true
       },
     })
+
+      
+    
+    
       const totalCollected = aggregation._sum.amount || 0;
 
     return res.json({

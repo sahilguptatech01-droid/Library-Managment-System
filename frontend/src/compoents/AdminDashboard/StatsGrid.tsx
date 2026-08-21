@@ -11,7 +11,7 @@ const StatsGrid = ({revenue,count}:Stats) => {
 
 
   return (
-<div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 sm:gap-5 sm:p-6 xl:grid-cols-3">
+<div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 sm:gap-5 sm:p-6 xl:grid-cols-2">
 
   <StatsCard
     title="Revenue"
@@ -23,10 +23,7 @@ const StatsGrid = ({revenue,count}:Stats) => {
     value={count || 0}
   />
 
-  <StatsCard
-    title="Notifications"
-    value={0}
-  />
+
 
 </div>
   )

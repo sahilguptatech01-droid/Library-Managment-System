@@ -6,7 +6,7 @@ import { ArrowLeft,Calendar,CreditCard,IndianRupee } from "lucide-react";
 import Loading from "../compoents/Loading";
 import { getToken } from "@clerk/react";
 import GlobalError from "../compoents/GlobalError";
-// import GlobalError from "../compoents/GlobalError";
+import { getMonth } from "../compoents/TransactionsPage/TransactionsCard";
 
 
 export default function TransactionHistory() {
@@ -149,7 +149,7 @@ export default function TransactionHistory() {
                 text-sm font-medium
                 text-zinc-200
               ">
-                {transaction.month}
+             {   getMonth(transaction.month)}
               </span>
             </div>
 

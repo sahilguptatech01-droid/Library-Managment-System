@@ -8,7 +8,7 @@ export  interface Transaction{
   id:string,
   name:string,
   amount:string,
-  month:string,
+  month:number,
   paymentDate:string,
   student:{name:string},
 }
@@ -34,7 +34,7 @@ export default function TransactionList({ transactions, isLoading, isError }:Tra
     return <GlobalError />;
   }
 
-  if (!transactions.length) {
+  if (!transactions?.length) {
     return (
       <div className="rounded-2xl border border-dashed border-zinc-700 bg-zinc-900/50 py-24 text-center">
         <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-zinc-800 text-3xl">

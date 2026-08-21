@@ -54,14 +54,18 @@ model StudentPayment {
   id          String   @id @default(uuid())
   studentId   String
   libraryId   String
-  paymentDate DateTime
-  month       String
+  paymentDate DateTime   
+  month       Int 
+  year        Int
   paymentMode Mode     @default(CASH)
   status      Payment  @default(COMPLETED)
-  createdAt   DateTime @default(now())
   amount      Decimal  @db.Decimal(10, 2)
   student     Student  @relation(fields: [studentId], references: [id])
   library      Library  @relation(fields: [libraryId],references: [id])
+  @@unique([studentId,month,year])
+  @@index([libraryId,month,year])
+  @@index([studentId,paymentDate])
+
 }
 
 enum Identity {

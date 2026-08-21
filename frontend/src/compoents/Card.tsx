@@ -138,7 +138,7 @@ const Card = () => {
           </p>
 
           <p className="mt-2 text-base text-zinc-400 sm:text-lg">
-            {data.details.shift===null ? "Not Assigned":data.details.shift}
+            {data.details.shift===null ? "Not Assigned":data.details.shift.shifts}
           </p>
         </div>
 

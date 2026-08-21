@@ -7,7 +7,7 @@ import Loading from "./Loading";
 import GlobalError from "./GlobalError";
 
 
-interface Shift {
+export interface Shift {
     shifts:string,
     id:string
 }

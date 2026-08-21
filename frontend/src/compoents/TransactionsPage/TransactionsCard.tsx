@@ -5,7 +5,12 @@ interface TransactionCardProps {
   transaction: Transaction;
 }
 
+
+export  const getMonth = (num: number) => new Date(0, num - 1).toLocaleString('en', { month: 'long' });
+
+
 export default function TransactionCard({ transaction }:TransactionCardProps) {
+  
   
 
   
@@ -51,7 +56,7 @@ export default function TransactionCard({ transaction }:TransactionCardProps) {
         </h3>
 
         <p className="mt-1.5 text-sm text-zinc-400">
-          {transaction.month}
+         { getMonth(transaction.month)}
         </p>
 
         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs text-zinc-500 sm:text-sm">

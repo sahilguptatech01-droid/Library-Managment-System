@@ -1,5 +1,4 @@
 import {
-  CalendarDays,
   CreditCard,
   IndianRupee,
   CalendarRange,
@@ -21,25 +20,29 @@ import { useParams,useNavigate } from "react-router-dom";
     paymentDate: Date;
     paymentMode: "CASH" | "ONLINE";
     amount: number;
-    month: string;
+    month: number;
   }
 
 
 
-  const months = [
-    "JANUARY",
-    "FEBRUARY",
-    "MARCH",
-    "APRIL",
-    "MAY",
-    "JUNE",
-    "JULY",
-    "AUGUST",
-    "SEPTEMBER",
-    "OCTOBER",
-    "NOVEMBER",
-    "DECEMBER",
-  ];
+
+const months = [
+  { id: 1, month: "January" },
+  { id: 2, month: "February" },
+  { id: 3, month: "March" },
+  { id: 4, month: "April" },
+  { id: 5, month: "May" },
+  { id: 6, month: "June" },
+  { id: 7, month: "July" },
+  { id: 8, month: "August" },
+  { id: 9, month: "September" },
+  { id: 10, month: "October" },
+  { id: 11, month: "November" },
+  { id: 12, month: "December" }
+];
+
+
+
 
 export default function PaymentForm() {
   const navigate=useNavigate()
@@ -69,11 +72,14 @@ export default function PaymentForm() {
 
   });
 
+  
+
 
 
   const {register,handleSubmit,formState:{errors,isSubmitting}}=useForm<PaymentFormState>()
   const onSubmit:SubmitHandler<PaymentFormState>=(data)=>{
-    const formData={...data,paymentDate:new Date(data.paymentDate),studentId:id}
+    const formData={...data,month:Number(data.month),studentId:id}
+    
     mutation.mutate(formData,{
       onSuccess: () => {
       
@@ -191,37 +197,8 @@ export default function PaymentForm() {
         className="space-y-5 sm:space-y-6"
       >
 
-        {/* Payment Date */}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-zinc-300">
-            Payment Date
-          </label>
 
-          <div className="relative">
-            <CalendarDays
-              size={18}
-              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 sm:left-4"
-            />
 
-            <input
-              type="date"
-              {...register("paymentDate", {
-                required: "Payment date is required",
-              })}
-              className={`w-full rounded-lg border bg-zinc-900 py-3 pl-11 pr-3 text-sm text-white outline-none transition focus:ring-2 sm:pl-12 sm:pr-4 ${
-                errors.paymentDate
-                  ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/10"
-                  : "border-zinc-800 focus:border-zinc-500 focus:ring-zinc-500/10"
-              }`}
-            />
-          </div>
-
-          {errors.paymentDate && (
-            <p className="mt-2 text-xs text-red-400 sm:text-sm">
-              {errors.paymentDate.message}
-            </p>
-          )}
-        </div>
 
         {/* Fee Month */}
         <div>
@@ -248,8 +225,8 @@ export default function PaymentForm() {
               <option value="">SELECT MONTH</option>
 
               {months.map((month) => (
-                <option key={month} value={month}>
-                  {month}
+                <option key={month.id} value={month.id}>
+                  {month.month}
                 </option>
               ))}
             </select>

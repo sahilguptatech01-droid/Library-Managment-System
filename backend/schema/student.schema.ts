@@ -15,7 +15,8 @@ export const createStudentSchema=z.object({
     mobileNo:z.string().length(10,"Must contain 10 digits"),
     identityProof:z.enum(["ADHARCARD" , "LICENSE","VOTERCARD"]),
     joiningDate:z.string(),
-    status:z.enum(["ACTIVE","LEAVE"])
+    status:z.enum(["ACTIVE","LEAVE"]),
+    shiftId:z.string().optional()
 
 })
 

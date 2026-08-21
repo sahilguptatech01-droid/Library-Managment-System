@@ -4,13 +4,14 @@ import {
   IndianRupee,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { getMonth } from "../TransactionsPage/TransactionsCard";
 
 interface Transaction {
   id: number;
   student: {
     name:string
   };
-  month: string;
+  month: number;
   amount: number;
   paymentMode: string;
 }
@@ -128,7 +129,7 @@ export default function RecentTransactions({
                 sm:text-sm
               "
             >
-              {payment.month} • {payment.paymentMode}
+              {getMonth(payment.month)} • {payment.paymentMode}
             </p>
 
           </div>
